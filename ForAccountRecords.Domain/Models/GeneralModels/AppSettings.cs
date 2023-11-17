@@ -9,6 +9,10 @@ namespace ForAccountRecords.Domain.Models.GeneralModels
   public class AppSettings
   {
 
+    public string AsymetricEncryptPrivateKey { get; set; }
 
+    public string AsymetricEncryptPublicKey { get; set; }
+
+    public string SymetricEncryptKey { get; set; }
   }
 }
