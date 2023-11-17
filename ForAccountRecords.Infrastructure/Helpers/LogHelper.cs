@@ -1,5 +1,7 @@
-﻿using ForAccountRecords.Application.Helpers;
+﻿
+using ForAccountRecords.Application.Helpers;
 using Microsoft.Extensions.Logging;
+using Microsoft.IdentityModel.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
