@@ -27,8 +27,12 @@ namespace ForAccountRecords.Domain.Models.DatabaseModels
     [EmailAddress]
     public string EmailAddress { get; set; }
 
-    [Phone] 
+    [Phone]
     public string PhoneNumber { get; set; } = string.Empty;
-   
+
+
+    [Required]
+    public string Password { get; set; }
+
   }
 }

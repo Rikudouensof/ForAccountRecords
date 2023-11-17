@@ -1,5 +1,7 @@
 using ForAccountRecords.Application.Helpers;
+using ForAccountRecords.Infrastructure.Data;
 using ForAccountRecords.Infrastructure.Helpers;
+using Microsoft.EntityFrameworkCore;
 using NLog.Extensions.Logging;
 
 namespace ForAccountRecords.Api
@@ -30,6 +32,10 @@ namespace ForAccountRecords.Api
       builder.Services.AddSwaggerGen();
 
 
+      //Add Database
+      var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
+      builder.Services.AddDbContext<ApplicationDbContext>(options =>
+         options.UseSqlServer(connectionString));
 
       //AddLogs
       builder.Services.AddSingleton<ILogHelper, LogHelper>();
@@ -40,15 +46,11 @@ namespace ForAccountRecords.Api
                  builder.SetMinimumLevel(LogLevel.Trace);
                  builder.AddNLog(nlpopts);
                });
-
-
       builder.Host.ConfigureLogging(logging =>
       {
         logging.ClearProviders();
         logging.AddNLog();
       });
-
-
       var app = builder.Build();
 
       // Configure the HTTP request pipeline.
