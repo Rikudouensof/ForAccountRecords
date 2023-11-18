@@ -11,5 +11,11 @@ namespace ForAccountRecords.Domain.Dtos
   {
 
     public AppSettings AppSettings { get; set; }
-  }
+
+        public string RequestId { get; set; }
+
+        public string Ip { get; set; }
+
+      
+    }
 }

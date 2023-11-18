@@ -30,7 +30,7 @@ namespace ForAccountRecords.Infrastructure.Helpers
       _logger.LogInformation($"requestId:{requestId}, Method Name:{methodName}, IP:{ip}, Message:{message}");
     }
 
-    public void logInformation(string requestId, string message, string ip, string methodName, object arguemnet)
+    public void LogInformation(string requestId, string message, string ip, string methodName, object arguemnet)
     {
       _logger.LogInformation($"requestId:{requestId}, Method Name:{methodName}, IP:{ip}, Message:{message}", arguemnet);
     }

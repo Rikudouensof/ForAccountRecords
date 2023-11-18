@@ -30,9 +30,23 @@ namespace ForAccountRecords.Domain.Models.DatabaseModels
     [Phone]
     public string PhoneNumber { get; set; } = string.Empty;
 
-
     [Required]
     public string Password { get; set; }
 
+    [Required]
+    public bool IsNewsLetter { get; set; }
+
+    [Required]
+    public bool IsEmailConfirmed { get; set; }
+
+    [Required]
+    public string ConfirmationCode { get; set; }
+    public DateTime ConfirmationCodeDate { get; set; }
+    public DateTime JoinedOn { get; set; }
+
+    public DateTime LastOnline { get; set; }
+
+    [Required]
+    public bool IsDeleted { get; set; }
   }
 }

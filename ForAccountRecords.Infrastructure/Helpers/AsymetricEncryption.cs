@@ -9,7 +9,7 @@ using System.Xml.Serialization;
 
 namespace ForAccountRecords.Infrastructure.Helpers
 {
-  public class AsymetricEncryption
+  public class AsymetricEncryption : IAsymetricEncryption
   {
     private static RSACryptoServiceProvider csp = new();
     private RSAParameters _privateKey;

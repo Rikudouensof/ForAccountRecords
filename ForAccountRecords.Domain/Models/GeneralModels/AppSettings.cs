@@ -18,6 +18,8 @@ namespace ForAccountRecords.Domain.Models.GeneralModels
     public string SymetricEncryptIV { get; set; }
 
     public string? SendGridEmailApiKey { get; set; }
+
+    public string? SendGridSourceName { get; set; }
     public string? SmtpEmailAddress { get; set; }
     public string? SmtpPassword { get; set; }
   }
