@@ -1,6 +1,8 @@
 using ForAccountRecords.Application.Helpers;
+using ForAccountRecords.Application.Services;
 using ForAccountRecords.Infrastructure.Data;
 using ForAccountRecords.Infrastructure.Helpers;
+using ForAccountRecords.Infrastructure.Services;
 using Microsoft.EntityFrameworkCore;
 using NLog.Extensions.Logging;
 
@@ -51,6 +53,11 @@ namespace ForAccountRecords.Api
         logging.ClearProviders();
         logging.AddNLog();
       });
+
+      //Impelement Dependency Injections
+      builder.Services.AddScoped<IEmailService, SMTPEmailService>();
+
+      //Build Service
       var app = builder.Build();
 
       // Configure the HTTP request pipeline.
