@@ -4,6 +4,7 @@ using ForAccountRecords.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ForAccountRecords.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231118143243_Change transaction structure")]
+    partial class Changetransactionstructure
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -67,6 +70,10 @@ namespace ForAccountRecords.Infrastructure.Migrations
                     b.Property<double>("Ammount")
                         .HasColumnType("float");
 
+                    b.Property<string>("Cashflow")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("CreditDerbitId")
                         .HasColumnType("int");
 
@@ -84,6 +91,9 @@ namespace ForAccountRecords.Infrastructure.Migrations
                     b.Property<string>("LedgerFolio")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Month")
+                        .HasColumnType("int");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -109,6 +119,9 @@ namespace ForAccountRecords.Infrastructure.Migrations
                     b.Property<string>("VoucherNumber")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Year")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
