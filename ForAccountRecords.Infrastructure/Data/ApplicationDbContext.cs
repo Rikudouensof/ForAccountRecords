@@ -17,5 +17,10 @@ namespace ForAccountRecords.Infrastructure.Data
     public DbSet<User> Users { get; set; }
     public DbSet<UserContact> Contacts { get; set; }
     public DbSet<UserContactsCategory> ContactsCategories { get; set; }
+
+    public DbSet<CreditDerbit> CreditDerbits { get; set; }
+    public DbSet<EntryType> EntryTypes { get; set; }
+    public DbSet<TransactionType> TransactionTypes { get; set; }
+    public DbSet<TransactionEntry> TransactionEntries { get; set; }
   }
 }
