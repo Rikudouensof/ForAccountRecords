@@ -14,6 +14,8 @@ namespace ForAccountRecords.Infrastructure.Data
         : base(options)
     {
     }
-    public DbSet<Users> User { get; set; }
+    public DbSet<User> Users { get; set; }
+    public DbSet<UserContact> Contacts { get; set; }
+    public DbSet<UserContactsCategory> ContactsCategories { get; set; }
   }
 }
