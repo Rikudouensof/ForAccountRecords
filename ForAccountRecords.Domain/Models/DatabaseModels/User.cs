@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ForAccountRecords.Domain.Models.DatabaseModels
 {
-  public class Users
+  public class User
   {
 
     [Key]
