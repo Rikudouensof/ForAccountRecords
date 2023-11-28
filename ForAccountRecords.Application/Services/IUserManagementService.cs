@@ -16,5 +16,18 @@ namespace ForAccountRecords.Application.Services
     public LoginResponseDto LoginUser(LoginRequestDto input);
     public ConfirmEmailResponseDto ConfirmEmail(ConfirmEmailRequestDto input);
 
+    public ResetPasswordResponseDto ResetPassword(ResetPasswordRequestDto input);
+
+    public ForgotPasswordResponseDto ForgotPassword(ForgotPasswordRequestDto input);
+
+    public DeleteAccountResponseDto DeleteAccount(DeleteAccountRequestDto input);
+
+    public ConfirmDeleteAccountResponseDto ConfirmDeleteAccount(ConfirmDeleteAccountRequestDto input);
+
+    public GetBasicUserInfoResponseDto GetBasicUserInfo(GetBasicUserInfoRequestDto input);
+
+    public GetUserDetailsResponseDto GetUserDetails(GetUserDetailsRequestDto input);
+
+    public string HashPasswordTest(string password);
   }
 }
