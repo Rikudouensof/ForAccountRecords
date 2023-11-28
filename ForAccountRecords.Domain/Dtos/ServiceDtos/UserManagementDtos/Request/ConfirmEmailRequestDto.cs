@@ -8,9 +8,8 @@ using System.Threading.Tasks;
 
 namespace ForAccountRecords.Domain.Dtos.ServiceDtos.UserManagementDtos.Request
 {
-  public class ConfirmEmailRequestDto : BaseRequestDto
+  public class ConfirmEmailRequestDto : BaseRequestDto<ConfirmEmailViewModel>
   {
-    [Required]
-    public ConfirmEmailViewModel InputData { get; set; }
+   
   }
 }

@@ -1,17 +1,13 @@
 ﻿using ForAccountRecords.Domain.ViewModels.UserManagementViewModels;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ForAccountRecords.Domain.Dtos.ServiceDtos.UserManagementDtos.Request
+namespace ForAccountRecords.Domain.Dtos.ServiceDtos.UserManagementDtos.Response
 {
-  
-
-  public class LoginRequestDto : BaseRequestDto<LoginViewModel>
+  internal class GetBasicUserInfoResponseDto : BaseRequestDto<BasicUserDetailsViewModel>
   {
-    
   }
 }

@@ -6,6 +6,7 @@ using ForAccountRecords.Domain.Constants;
 using ForAccountRecords.Domain.Dtos.ServiceDtos.UserManagementDtos.Request;
 using ForAccountRecords.Domain.Dtos.ServiceDtos.UserManagementDtos.Response;
 using ForAccountRecords.Domain.ViewModels.UserManagementViewModels;
+using ForAccountRecords.Infrastructure.Helpers;
 using ForAccountRecords.Infrastructure.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -32,14 +33,12 @@ namespace ForAccountRecords.Api.Controllers
     }
 
 
-    [HttpPost("RegisterUser")]
+    [HttpPost("Register")]
     public IActionResult RegisterNewUser(RegisterViewModel input)
     {
       var methodname = $"{classname}/{nameof(RegisterNewUser)}";
       var appSettings = _appSetting.Generate();
-      Random rnd = new Random();
-      int myRandomNo = rnd.Next(100000000, 999999999);
-      var requestId = $"Req{myRandomNo}";
+      var requestId = GeneralHelpers.GetNewRequestId();
       var Ip = Request.HttpContext.Connection.RemoteIpAddress.ToString();
       _logger.LogInformation(requestId, "New Process", Ip, methodname);
       if (!ModelState.IsValid)
@@ -54,6 +53,66 @@ namespace ForAccountRecords.Api.Controllers
         Ip = Ip
       };
       var response = _userMgmt.RegisterUser(registerUserPayload);
+      if (response.ResponseCode == GeneralResponse.sucessCode)
+      {
+        return Ok(response);
+      }
+      else
+      {
+        return BadRequest(response);
+      }
+    }
+
+    [HttpPost("Login")]
+    public IActionResult LoginUser(LoginViewModel input)
+    {
+      var methodname = $"{classname}/{nameof(RegisterNewUser)}";
+      var appSettings = _appSetting.Generate();
+      var requestId = GeneralHelpers.GetNewRequestId();
+      var Ip = Request.HttpContext.Connection.RemoteIpAddress.ToString();
+      _logger.LogInformation(requestId, "New Process", Ip, methodname);
+      if (!ModelState.IsValid)
+      {
+        return BadRequest();
+      }
+      var payload = new LoginRequestDto()
+      {
+        AppSettings = appSettings,
+        InputData = input,
+        Ip = Ip,
+        RequestId = requestId
+      };
+      var response = _userMgmt.LoginUser(payload);
+      if (response.ResponseCode == GeneralResponse.sucessCode)
+      {
+        return Ok(response);
+      }
+      else
+      {
+        return BadRequest(response);
+      }
+    }
+
+    [HttpPost("ConfirmEmailAddress")]
+    public IActionResult ConfirmEmail(ConfirmEmailViewModel input)
+    {
+      var methodname = $"{classname}/{nameof(RegisterNewUser)}";
+      var appSettings = _appSetting.Generate();
+      var requestId = GeneralHelpers.GetNewRequestId();
+      var Ip = Request.HttpContext.Connection.RemoteIpAddress.ToString();
+      _logger.LogInformation(requestId, "New Process", Ip, methodname);
+      if (!ModelState.IsValid)
+      {
+        return BadRequest();
+      }
+      var payload = new ConfirmEmailRequestDto()
+      {
+        AppSettings = appSettings,
+        InputData = input,
+        Ip = Ip,
+        RequestId = requestId
+      };
+      var response = _userMgmt.ConfirmEmail(payload);
       if (response.ResponseCode == GeneralResponse.sucessCode)
       {
         return Ok(response);
