@@ -6,15 +6,20 @@ using System.Threading.Tasks;
 
 namespace ForAccountRecords.Infrastructure.Helpers
 {
-  public class ForAccountRecordsConvertions
+  public static class ForAccountRecordsConvertions
   {
 
-    public byte[] stringTOByteArray(string inputString)
+    public static byte[] stringToyByteArray(string inputString)
     {
       return Encoding.ASCII.GetBytes(inputString);
     }
 
-    public string GetStringDate(DateTime input)
+    public static string byteArrayToString(byte[] inputByte)
+    {
+      return Encoding.ASCII.GetString(inputByte);
+    }
+
+    public static string GetStringDate(DateTime input)
     {
       return input.ToString("dddd dd/MM/yyyy HH:mm");
     }

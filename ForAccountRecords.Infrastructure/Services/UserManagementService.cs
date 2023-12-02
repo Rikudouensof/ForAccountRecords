@@ -6,6 +6,7 @@ using ForAccountRecords.Domain.Dtos.ServiceDtos.UserManagementDtos.Request;
 using ForAccountRecords.Domain.Dtos.ServiceDtos.UserManagementDtos.Response;
 using ForAccountRecords.Domain.Models.DatabaseModels;
 using ForAccountRecords.Domain.Models.GeneralModels;
+using ForAccountRecords.Domain.ViewModels.UserManagementViewModels;
 using ForAccountRecords.Infrastructure.Data;
 using ForAccountRecords.Infrastructure.Helpers;
 using System;
@@ -298,7 +299,7 @@ namespace ForAccountRecords.Infrastructure.Services
         {
           ResponseCode = GeneralResponse.sucessCode,
           ResponseMessage = GeneralResponse.sucessMessage,
-          Response = new Domain.ViewModels.UserManagementViewModels.BasicUserDetailsViewModel()
+          Response = new BasicUserDetailsViewModel()
           {
             UserEmail = user.EmailAddress,
             UserId = user.Id.ToString(),
@@ -306,13 +307,15 @@ namespace ForAccountRecords.Infrastructure.Services
             
           }
         };
+        _logger.LogInformation(input.RequestId, "Process Sucessful", input.Ip, methodname);
+        response = apiResponse;
       }
       catch (TimeoutException ex)
       {
         _logger.LogError(input.RequestId, "Process Faild", input.Ip, methodname, ex);
         response.ResponseCode = GeneralResponse.timeoutCode;
         response.ResponseMessage = GeneralResponse.timeoutMessage;
-        response.Response = response.Response;
+        response.Response = new BasicUserDetailsViewModel();
       }
       catch (Exception ex)
       {
@@ -320,7 +323,7 @@ namespace ForAccountRecords.Infrastructure.Services
         _logger.LogError(input.RequestId, "Process Faild", input.Ip, methodname, ex);
         response.ResponseCode = GeneralResponse.failureCode;
         response.ResponseMessage = GeneralResponse.failureMessage;
-        response.Response = response.Response;
+        response.Response = new BasicUserDetailsViewModel();
 
       }
       return response;
@@ -331,12 +334,12 @@ namespace ForAccountRecords.Infrastructure.Services
       var methodname = $"{classname}/{nameof(GetUserDetails)}";
       var response = new GetUserDetailsResponseDto();
       _logger.LogInformation(input.RequestId, "New Process", input.Ip, methodname);
-      var programConvertions = new ForAccountRecordsConvertions();
+     
       try
       {
         var payload = input.InputData;
-        var user = GetUserDataByUserId(input.InputData.UserId, input.RequestId, input.Ip);
-        var apiResponse = new GetBasicUserInfoResponseDto()
+        var user = GetUserDataByUserId(payload.UserId, input.RequestId, input.Ip);
+        var apiResponse = new GetUserDetailsResponseDto()
         {
           ResponseCode = GeneralResponse.sucessCode,
           ResponseMessage = GeneralResponse.sucessMessage,
@@ -346,17 +349,22 @@ namespace ForAccountRecords.Infrastructure.Services
             UserId = user.Id.ToString(),
             UserName = user.UserName,
             PhoneNumber = user.PhoneNumber,
-            JoinedOn = programConvertions.GetStringDate(user.JoinedOn),
-            LastOnlineOn = programConvertions.GetStringDate(user.LastOnline)
+            JoinedOn = ForAccountRecordsConvertions.GetStringDate(user.JoinedOn),
+            LastOnlineOn = ForAccountRecordsConvertions.GetStringDate(user.LastOnline)
           }
         };
+        _logger.LogInformation(input.RequestId, "Process Sucessful", input.Ip, methodname);
+        response = apiResponse;
+       
+
+
       }
       catch (TimeoutException ex)
       {
         _logger.LogError(input.RequestId, "Process Faild", input.Ip, methodname, ex);
         response.ResponseCode = GeneralResponse.timeoutCode;
         response.ResponseMessage = GeneralResponse.timeoutMessage;
-        response.Response = response.Response;
+        response.Response = new UserDetailsViewModel();
       }
       catch (Exception ex)
       {
@@ -364,7 +372,7 @@ namespace ForAccountRecords.Infrastructure.Services
         _logger.LogError(input.RequestId, "Process Faild", input.Ip, methodname, ex);
         response.ResponseCode = GeneralResponse.failureCode;
         response.ResponseMessage = GeneralResponse.failureMessage;
-        response.Response = response.Response;
+        response.Response = new UserDetailsViewModel();
 
       }
       return response;
