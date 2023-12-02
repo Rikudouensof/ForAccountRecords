@@ -11,7 +11,7 @@ namespace ForAccountRecords.Infrastructure.Helpers
 {
   public class AsymetricEncryption : IAsymetricEncryption
   {
-    private static RSACryptoServiceProvider csp = new();
+    private static RSACryptoServiceProvider csp = new RSACryptoServiceProvider();
     private RSAParameters _privateKey;
     private RSAParameters _publicKey;
 
@@ -31,11 +31,8 @@ namespace ForAccountRecords.Infrastructure.Helpers
 
     public string Encrypt(string plainText)
     {
-      csp = new RSACryptoServiceProvider();
-      csp.ImportParameters(_publicKey);
-      var data = Encoding.Unicode.GetBytes(plainText);
-      var cyper = csp.Encrypt(data, false);
-      return Convert.ToHexString(cyper);
+      
+    
     }
 
     public string Decrypt(string cypherText)

@@ -13,5 +13,10 @@ namespace ForAccountRecords.Infrastructure.Helpers
     {
       return Encoding.ASCII.GetBytes(inputString);
     }
+
+    public string GetStringDate(DateTime input)
+    {
+      return input.ToString("dddd dd/MM/yyyy HH:mm");
+    }
   }
 }

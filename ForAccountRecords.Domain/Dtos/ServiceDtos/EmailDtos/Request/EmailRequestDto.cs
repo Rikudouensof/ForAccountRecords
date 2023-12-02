@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace ForAccountRecords.Domain.Dtos.ServiceDtos.EmailDtos.Request
 {
-    public class EmailRequestDto : BaseRequestDto
+    public class EmailRequestDto : BaseRequestDto<string>
     {
         public EmailViewmodel EmailData { get; set; }
 

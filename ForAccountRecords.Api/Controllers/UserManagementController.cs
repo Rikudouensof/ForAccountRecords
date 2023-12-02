@@ -123,5 +123,16 @@ namespace ForAccountRecords.Api.Controllers
       }
     }
 
+    [HttpPost("HashPassword")]
+    public IActionResult HashPainTextPassword(string password)
+    {
+      var methodname = $"{classname}/{nameof(RegisterNewUser)}";
+      var appSettings = _appSetting.Generate();
+      var requestId = GeneralHelpers.GetNewRequestId();
+      var Ip = Request.HttpContext.Connection.RemoteIpAddress.ToString();
+      _logger.LogInformation(requestId, "New Process", Ip, methodname);
+      return Ok( _userMgmt.HashPasswordTest(password, appSettings));
+    }
+
   }
 }

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ForAccountRecords.Domain.Dtos.ServiceDtos.UserManagementDtos.Request
 {
-  public class ResetPasswordRequestDto : BaseResponseDto<ResetPasswordViewModel>
+  public class ResetPasswordRequestDto : BaseRequestDto<ResetPasswordViewModel>
   {
   }
 }

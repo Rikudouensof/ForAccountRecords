@@ -1,5 +1,6 @@
 ﻿using ForAccountRecords.Domain.Dtos.ServiceDtos.UserManagementDtos.Request;
 using ForAccountRecords.Domain.Dtos.ServiceDtos.UserManagementDtos.Response;
+using ForAccountRecords.Domain.Models.GeneralModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,6 +29,6 @@ namespace ForAccountRecords.Application.Services
 
     public GetUserDetailsResponseDto GetUserDetails(GetUserDetailsRequestDto input);
 
-    public string HashPasswordTest(string password);
+    public string HashPasswordTest(string password, AppSettings appSettings);
   }
 }

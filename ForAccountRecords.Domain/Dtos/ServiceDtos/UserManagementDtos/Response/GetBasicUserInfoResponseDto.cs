@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ForAccountRecords.Domain.Dtos.ServiceDtos.UserManagementDtos.Response
 {
-  public class GetBasicUserInfoResponseDto : BaseRequestDto<BasicUserDetailsViewModel>
+  public class GetBasicUserInfoResponseDto : BaseResponseDto<BasicUserDetailsViewModel>
   {
   }
 }
