@@ -123,6 +123,202 @@ namespace ForAccountRecords.Api.Controllers
       }
     }
 
+   
+
+    [HttpPost("ConfirmDeleteAccount")]
+    public IActionResult DeleteAccountConfirmation(ConfirmDeleteAccountViewModel input)
+    {
+      var methodname = $"{classname}/{nameof(DeleteAccountConfirmation)}";
+      var appSettings = _appSetting.Generate();
+      var requestId = GeneralHelpers.GetNewRequestId();
+      var Ip = Request.HttpContext.Connection.RemoteIpAddress.ToString();
+      _logger.LogInformation(requestId, "New Process", Ip, methodname);
+      if (!ModelState.IsValid)
+      {
+        return BadRequest(ModelState);
+      }
+      var payload = new ConfirmDeleteAccountRequestDto()
+      {
+        InputData = input,
+        AppSettings = appSettings,
+        Ip = Ip,
+        RequestId = requestId
+      };
+      var response = _userMgmt.ConfirmDeleteAccount(payload);
+      if (response.ResponseCode == GeneralResponse.sucessCode)
+      {
+        return Ok(response);
+      }
+      else
+      {
+        return BadRequest(response) ;
+      }
+     
+    }
+
+
+    [HttpPost("DeleteAccount")]
+    public IActionResult AccountDelete(UserByIdViewModel input)
+    {
+      var methodname = $"{classname}/{nameof(AccountDelete)}";
+      var appSettings = _appSetting.Generate();
+      var requestId = GeneralHelpers.GetNewRequestId();
+      var Ip = Request.HttpContext.Connection.RemoteIpAddress.ToString();
+      _logger.LogInformation(requestId, "New Process", Ip, methodname);
+      if (!ModelState.IsValid)
+      {
+        return BadRequest(ModelState);
+      }
+      var payload = new DeleteAccountRequestDto()
+      {
+        InputData = input,
+        AppSettings = appSettings,
+        Ip = Ip,
+        RequestId = requestId
+      };
+      var response = _userMgmt.DeleteAccount(payload);
+      if (response.ResponseCode == GeneralResponse.sucessCode)
+      {
+        return Ok(response);
+      }
+      else
+      {
+        return BadRequest(response);
+      }
+
+    }
+
+
+
+    [HttpPost("ForgotPassword")]
+    public IActionResult ForgotPasswordSet(ForgotPasswordViewModel input)
+    {
+      var methodname = $"{classname}/{nameof(ForgotPasswordSet)}";
+      var appSettings = _appSetting.Generate();
+      var requestId = GeneralHelpers.GetNewRequestId();
+      var Ip = Request.HttpContext.Connection.RemoteIpAddress.ToString();
+      _logger.LogInformation(requestId, "New Process", Ip, methodname);
+      if (!ModelState.IsValid)
+      {
+        return BadRequest(ModelState);
+      }
+      var payload = new ForgotPasswordRequestDto()
+      {
+        InputData = input,
+        AppSettings = appSettings,
+        Ip = Ip,
+        RequestId = requestId
+      };
+      var response = _userMgmt.ForgotPassword(payload);
+      if (response.ResponseCode == GeneralResponse.sucessCode)
+      {
+        return Ok(response);
+      }
+      else
+      {
+        return BadRequest(response);
+      }
+
+    }
+
+
+    [HttpPost("GetBasicUserInfo")]
+    public IActionResult BasicUserInfo(UserByIdViewModel input)
+    {
+      var methodname = $"{classname}/{nameof(BasicUserInfo)}";
+      var appSettings = _appSetting.Generate();
+      var requestId = GeneralHelpers.GetNewRequestId();
+      var Ip = Request.HttpContext.Connection.RemoteIpAddress.ToString();
+      _logger.LogInformation(requestId, "New Process", Ip, methodname);
+      if (!ModelState.IsValid)
+      {
+        return BadRequest(ModelState);
+      }
+      var payload = new GetBasicUserInfoRequestDto()
+      {
+        InputData = input,
+        AppSettings = appSettings,
+        Ip = Ip,
+        RequestId = requestId
+      };
+      var response = _userMgmt.GetBasicUserInfo(payload);
+      if (response.ResponseCode == GeneralResponse.sucessCode)
+      {
+        return Ok(response);
+      }
+      else
+      {
+        return BadRequest(response);
+      }
+
+    }
+
+
+    [HttpPost("GetUserDetails")]
+    public IActionResult UserDetails(UserByIdViewModel input)
+    {
+      var methodname = $"{classname}/{nameof(BasicUserInfo)}";
+      var appSettings = _appSetting.Generate();
+      var requestId = GeneralHelpers.GetNewRequestId();
+      var Ip = Request.HttpContext.Connection.RemoteIpAddress.ToString();
+      _logger.LogInformation(requestId, "New Process", Ip, methodname);
+      if (!ModelState.IsValid)
+      {
+        return BadRequest(ModelState);
+      }
+      var payload = new GetUserDetailsRequestDto()
+      {
+        InputData = input,
+        AppSettings = appSettings,
+        Ip = Ip,
+        RequestId = requestId
+      };
+      var response = _userMgmt.GetUserDetails(payload);
+      if (response.ResponseCode == GeneralResponse.sucessCode)
+      {
+        return Ok(response);
+      }
+      else
+      {
+        return BadRequest(response);
+      }
+
+    }
+
+    [HttpPost("ResetPassword")]
+    public IActionResult ResetUserPassword(ResetPasswordViewModel input)
+    {
+      var methodname = $"{classname}/{nameof(ResetUserPassword)}";
+      var appSettings = _appSetting.Generate();
+      var requestId = GeneralHelpers.GetNewRequestId();
+      var Ip = Request.HttpContext.Connection.RemoteIpAddress.ToString();
+      _logger.LogInformation(requestId, "New Process", Ip, methodname);
+      if (!ModelState.IsValid)
+      {
+        return BadRequest(ModelState);
+      }
+      var payload = new ResetPasswordRequestDto()
+      {
+        InputData = input,
+        AppSettings = appSettings,
+        Ip = Ip,
+        RequestId = requestId
+      };
+      var response = _userMgmt.ResetPassword(payload);
+      if (response.ResponseCode == GeneralResponse.sucessCode)
+      {
+        return Ok(response);
+      }
+      else
+      {
+        return BadRequest(response);
+      }
+
+    }
+
+
+
+    //TO remove before deployment
     [HttpPost("HashPassword")]
     public IActionResult HashPainTextPassword(string password)
     {
@@ -131,8 +327,7 @@ namespace ForAccountRecords.Api.Controllers
       var requestId = GeneralHelpers.GetNewRequestId();
       var Ip = Request.HttpContext.Connection.RemoteIpAddress.ToString();
       _logger.LogInformation(requestId, "New Process", Ip, methodname);
-      return Ok( _userMgmt.HashPasswordTest(password, appSettings));
+      return Ok(_userMgmt.HashPasswordTest(password, appSettings));
     }
-
   }
 }

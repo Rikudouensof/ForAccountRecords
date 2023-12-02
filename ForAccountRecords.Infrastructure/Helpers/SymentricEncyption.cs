@@ -14,9 +14,9 @@ namespace ForAccountRecords.Infrastructure.Helpers
     public static string EncryptString(string plainText, AppSettings appSettings)
     {
       byte[] encrypted;
-      var convertions = new ForAccountRecordsConvertions();
-      var key = convertions.stringTOByteArray(appSettings.SymetricEncryptKey+DateTime.Now.ToString("ddMMMyyyyHH"));
-      var iv = convertions.stringTOByteArray(appSettings.SymetricEncryptIV + DateTime.Now.ToString("ddMMMyyyyHH"));
+      
+      var key = ForAccountRecordsConvertions.stringToyByteArray(appSettings.SymetricEncryptKey+DateTime.Now.ToString("ddMMMyyyyHH"));
+      var iv = ForAccountRecordsConvertions.stringToyByteArray(appSettings.SymetricEncryptIV + DateTime.Now.ToString("ddMMMyyyyHH"));
 
 
       using (Aes aes = Aes.Create())
@@ -45,9 +45,9 @@ namespace ForAccountRecords.Infrastructure.Helpers
 
     public static string DecryptString(string cipherText, AppSettings appSettings)
     {
-      var convertions = new ForAccountRecordsConvertions();
-      var key = convertions.stringTOByteArray(appSettings.SymetricEncryptKey + DateTime.Now.ToString("ddMMMyyyyHH"));
-      var iv = convertions.stringTOByteArray(appSettings.SymetricEncryptIV + DateTime.Now.ToString("ddMMMyyyyHH"));
+      
+      var key = ForAccountRecordsConvertions.stringToyByteArray(appSettings.SymetricEncryptKey + DateTime.Now.ToString("ddMMMyyyyHH"));
+      var iv = ForAccountRecordsConvertions.stringToyByteArray(appSettings.SymetricEncryptIV + DateTime.Now.ToString("ddMMMyyyyHH"));
 
       byte[] cipherBytes = Convert.FromHexString(cipherText);
 

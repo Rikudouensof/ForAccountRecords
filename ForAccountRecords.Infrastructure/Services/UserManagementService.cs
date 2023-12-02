@@ -616,7 +616,7 @@ namespace ForAccountRecords.Infrastructure.Services
     private User GetUserDataByUserId(int userId, string requestId, string Ip )
     {
       var methodname = $"{classname}/{nameof(LoginUser)}";
-      var response = new User();
+     
       _logger.LogInformation(requestId, "New Process", Ip, methodname);
       try
       {
