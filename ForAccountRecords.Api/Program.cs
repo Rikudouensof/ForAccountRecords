@@ -59,7 +59,7 @@ namespace ForAccountRecords.Api
       builder.Services.AddScoped<IEmailService, SMTPEmailService>();
       builder.Services.AddScoped<IUserManagementService, UserManagementService>();
       builder.Services.AddScoped<IAppSettingGenerator, AppSettingGenerator>();
-      builder.Services.AddScoped<IAsymetricEncryption, AsymetricEncryption>();
+      builder.Services.AddScoped<IInnerEncryption, InnerEncryption>();
 
 
       //Build Service
