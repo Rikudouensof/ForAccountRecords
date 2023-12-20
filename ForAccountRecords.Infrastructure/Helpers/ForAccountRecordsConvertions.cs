@@ -6,12 +6,27 @@ using System.Threading.Tasks;
 
 namespace ForAccountRecords.Infrastructure.Helpers
 {
-  public class ForAccountRecordsConvertions
-  {
-
-    public byte[] stringTOByteArray(string inputString)
+    public static class ForAccountRecordsConvertions
     {
-      return Encoding.ASCII.GetBytes(inputString);
+
+        public static byte[] stringToyByteArray(string inputString)
+        {
+            return Encoding.ASCII.GetBytes(inputString);
+        }
+
+        public static string byteArrayToString(byte[] inputByte)
+        {
+            return Encoding.ASCII.GetString(inputByte);
+        }
+
+        public static string GetStringDate(DateTime input)
+        {
+            return input.ToString("dddd dd/MM/yyyy HH:mm");
+        }
+
+        public static string GetBiacedDate(DateTime input)
+        {
+            return input.ToString("dddd dd/MM/yyyy HH:mm");
+        }
     }
-  }
 }

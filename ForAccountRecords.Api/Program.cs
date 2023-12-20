@@ -1,3 +1,4 @@
+using ForAccountRecords.Api.ApplicationTasks;
 using ForAccountRecords.Application.Helpers;
 using ForAccountRecords.Application.Services;
 using ForAccountRecords.Infrastructure.Data;
@@ -56,6 +57,10 @@ namespace ForAccountRecords.Api
 
       //Impelement Dependency Injections
       builder.Services.AddScoped<IEmailService, SMTPEmailService>();
+      builder.Services.AddScoped<IUserManagementService, UserManagementService>();
+      builder.Services.AddScoped<IAppSettingGenerator, AppSettingGenerator>();
+      builder.Services.AddScoped<IInnerEncryption, InnerEncryption>();
+
 
       //Build Service
       var app = builder.Build();
