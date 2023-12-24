@@ -45,30 +45,38 @@ namespace ForAccountRecords.Infrastructure.Helpers
 
     public static string DecryptString(string cipherText, AppSettings appSettings)
     {
-      
-      var key = ForAccountRecordsConvertions.stringToyByteArray(appSettings.SymetricEncryptKey + DateTime.Now.ToString("ddMMMyyyyHH"));
-      var iv = ForAccountRecordsConvertions.stringToyByteArray(appSettings.SymetricEncryptIV + DateTime.Now.ToString("ddMMMyyyyHH"));
-
-      byte[] cipherBytes = Convert.FromHexString(cipherText);
-
-      using (Aes aes = Aes.Create())
-      {
-        aes.Key = key;
-        aes.IV = iv;
-
-        ICryptoTransform decryptor = aes.CreateDecryptor(aes.Key, aes.IV);
-
-        using (var ms = new System.IO.MemoryStream(cipherBytes))
-        {
-          using (var cs = new CryptoStream(ms, decryptor, CryptoStreamMode.Read))
-          {
-            using (var sr = new System.IO.StreamReader(cs))
+            try
             {
-              return sr.ReadToEnd();
+                var key = ForAccountRecordsConvertions.stringToyByteArray(appSettings.SymetricEncryptKey + DateTime.Now.ToString("ddMMMyyyyHH"));
+                var iv = ForAccountRecordsConvertions.stringToyByteArray(appSettings.SymetricEncryptIV + DateTime.Now.ToString("ddMMMyyyyHH"));
+
+                byte[] cipherBytes = Convert.FromHexString(cipherText);
+
+                using (Aes aes = Aes.Create())
+                {
+                    aes.Key = key;
+                    aes.IV = iv;
+
+                    ICryptoTransform decryptor = aes.CreateDecryptor(aes.Key, aes.IV);
+
+                    using (var ms = new System.IO.MemoryStream(cipherBytes))
+                    {
+                        using (var cs = new CryptoStream(ms, decryptor, CryptoStreamMode.Read))
+                        {
+                            using (var sr = new System.IO.StreamReader(cs))
+                            {
+                                return sr.ReadToEnd();
+                            }
+                        }
+                    }
+                }
             }
-          }
-        }
-      }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+      
     }
 
   }
