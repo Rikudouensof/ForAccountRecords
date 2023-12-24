@@ -24,16 +24,19 @@ namespace ForAccountRecords.Infrastructure.Services
         private readonly ApplicationDbContext _db;
         private readonly IInnerEncryption _encypt;
         private readonly IEmailService _emailService;
+        private readonly IJwtHelper _jwtHelper;
         public UserManagementService(ILogHelper logger,
           ApplicationDbContext dbcontext,
           IInnerEncryption encypt,
-          IEmailService emailService
+          IEmailService emailService,
+          IJwtHelper jwtHelper
           )
         {
             _logger = logger;
             _db = dbcontext;
             _encypt = encypt;
             _emailService = emailService;
+            _jwtHelper = jwtHelper;
         }
 
         public ConfirmDeleteAccountResponseDto ConfirmDeleteAccount(ConfirmDeleteAccountRequestDto input)
@@ -394,9 +397,9 @@ namespace ForAccountRecords.Infrastructure.Services
                 var payload = input.InputData;
                 var user = _db.Users.Where(m => m.EmailAddress.Equals(payload.UserIdentity) || m.UserName.Equals(payload.UserIdentity)).First();
                 var inputPasswordPlain = SymentricEncyption.DecryptString(payload.Password, input.AppSettings);
-                var inputPasswordencrypted = _encypt.PasswordEncrypt(inputPasswordPlain, ForAccountRecordsConvertions.GetBiacedDate(user.JoinedOn));
-                var encryptedPassword = _encypt.PasswordEncrypt(user.Password, ForAccountRecordsConvertions.GetBiacedDate(user.JoinedOn));
-                if (inputPasswordencrypted != encryptedPassword)
+                var inputPasswordencrypted = _encypt.Encrypt(inputPasswordPlain, input.AppSettings);
+                
+                if (inputPasswordencrypted != user.Password)
                 {
                     _logger.logWarning(input.RequestId, $"Login Failed for {payload.UserIdentity}: Invalid Password", input.Ip, methodname);
                     response.ResponseCode = GeneralResponse.failureCode;
@@ -413,12 +416,13 @@ namespace ForAccountRecords.Infrastructure.Services
                     return response;
                 }
                 //JWT Code
-
+                var jwtToken = _jwtHelper.GenerateToken(user);
+                user.ConfirmationCodeDate = new DateTime(2000, 01, 01);
                 user.LastOnline = DateTime.Now;
                 _db.Update(user);
                 response.ResponseCode = GeneralResponse.sucessCode;
                 response.ResponseMessage = GeneralResponse.sucessMessage;
-                response.Response = $"Token:{payload.UserIdentity}";
+                response.Response = $"Token:{jwtToken}";
                 _logger.LogInformation(input.RequestId, "Process Sucessful", input.Ip, methodname);
             }
             catch (TimeoutException ex)
@@ -479,7 +483,7 @@ namespace ForAccountRecords.Infrastructure.Services
                 var emailConfirmationCode = SymentricEncyption.EncryptString(myRandomNo.ToString(), input.AppSettings);
                 var inputPassword = SymentricEncyption.DecryptString(payload.Password, input.AppSettings);
                 var joinDate = DateTime.Now;
-                var encryptedPassword = _encypt.PasswordEncrypt(inputPassword, ForAccountRecordsConvertions.GetBiacedDate(joinDate));
+                var encryptedPassword = _encypt.Encrypt(inputPassword,input.AppSettings);
 
 
                 //SendMail
@@ -559,7 +563,7 @@ namespace ForAccountRecords.Infrastructure.Services
                     return response;
                 }
                 var user = _db.Users.Where(m => m.EmailAddress.Equals(payload.UserIdentity) || m.UserName.Equals(payload.UserIdentity)).First();
-                if (user.ConfirmationCodeDate < DateTime.Now.AddHours(1))
+                if (user.ConfirmationCodeDate.AddHours(1) < DateTime.Now)
                 {
                     _logger.logWarning(input.RequestId, "Process Faild, token expired", input.Ip, methodname);
                     response.ResponseCode = GeneralResponse.failureCode;
@@ -568,7 +572,7 @@ namespace ForAccountRecords.Infrastructure.Services
                     return response;
                 }
                 var inputCode = SymentricEncyption.DecryptString(payload.Code, input.AppSettings);
-                var userCode = SymentricEncyption.DecryptString(user.ConfirmationCode, input.AppSettings);
+                var userCode = _encypt.Decrypt(user.ConfirmationCode, input.AppSettings);
                 if (inputCode != userCode)
                 {
                     _logger.logWarning(input.RequestId, "Process Faild, wrong token", input.Ip, methodname);

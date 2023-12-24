@@ -78,7 +78,7 @@ namespace ForAccountRecords.Infrastructure.Helpers
         {
             byte[] salt = ForAccountRecordsConvertions.stringToyByteArray(saltString);
             new RNGCryptoServiceProvider().GetBytes(salt);
-            var pbkdf2 = new Rfc2898DeriveBytes(plainPassword, salt, 9938293);
+            var pbkdf2 = new Rfc2898DeriveBytes(plainPassword, salt);
             byte[] hash = pbkdf2.GetBytes(20);
             byte[] hashBytes = new byte[36];
             Array.Copy(salt, 0, hashBytes, 0, 16);
