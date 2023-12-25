@@ -397,6 +397,7 @@ namespace ForAccountRecords.Infrastructure.Services
                 var payload = input.InputData;
                 var user = _db.Users.Where(m => m.EmailAddress.Equals(payload.UserIdentity) || m.UserName.Equals(payload.UserIdentity)).First();
                 var inputPasswordPlain = SymentricEncyption.DecryptString(payload.Password, input.AppSettings);
+                inputPasswordPlain = inputPasswordPlain + ForAccountRecordsConvertions.GetBiacedDate(user.JoinedOn);
                 var inputPasswordencrypted = _encypt.Encrypt(inputPasswordPlain, input.AppSettings);
                 
                 if (inputPasswordencrypted != user.Password)
@@ -483,6 +484,7 @@ namespace ForAccountRecords.Infrastructure.Services
                 var emailConfirmationCode = SymentricEncyption.EncryptString(myRandomNo.ToString(), input.AppSettings);
                 var inputPassword = SymentricEncyption.DecryptString(payload.Password, input.AppSettings);
                 var joinDate = DateTime.Now;
+                inputPassword = inputPassword + ForAccountRecordsConvertions.GetBiacedDate(joinDate);
                 var encryptedPassword = _encypt.Encrypt(inputPassword,input.AppSettings);
 
 
@@ -582,6 +584,7 @@ namespace ForAccountRecords.Infrastructure.Services
                     return response;
                 }
                 var inputPassword = SymentricEncyption.DecryptString(payload.Password, input.AppSettings);
+                inputPassword = inputPassword + ForAccountRecordsConvertions.GetBiacedDate(user.JoinedOn);
                 var encryptedPassword = _encypt.Encrypt(inputPassword, input.AppSettings);
                 user.Password = encryptedPassword;
                 _db.Update(user);
