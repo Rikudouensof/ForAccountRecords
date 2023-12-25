@@ -7,8 +7,9 @@ using System.Threading.Tasks;
 
 namespace ForAccountRecords.Domain.Models.DatabaseModels
 {
-    public class EntryType
+    public class SubTransactionClassification
     {
+
         [Key]
         public int Id { get; set; }
 
@@ -16,7 +17,7 @@ namespace ForAccountRecords.Domain.Models.DatabaseModels
         public string Name { get; set; }
 
         //Relationships
-        public virtual SubTransactionClassification SubTransactionClassification { get; set; }
-        public int SubTransactionClassificationId { get; set; }
+        public virtual TransactionClassification TransactionClassification { get; set; }
+        public int TransactionClassificationId { get; set; }
     }
 }

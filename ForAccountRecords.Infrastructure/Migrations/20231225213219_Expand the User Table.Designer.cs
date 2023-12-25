@@ -4,6 +4,7 @@ using ForAccountRecords.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ForAccountRecords.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231225213219_Expand the User Table")]
+    partial class ExpandtheUserTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,128 +24,6 @@ namespace ForAccountRecords.Infrastructure.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
-
-            modelBuilder.Entity("ForAccountRecords.Domain.Models.DatabaseModels.Entry", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<decimal>("Amount")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<DateTime>("Date")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("EntryTypeId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("RefrenceNumber")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<decimal>("Units")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("EntryTypeId");
-
-                    b.ToTable("Entries");
-                });
-
-            modelBuilder.Entity("ForAccountRecords.Domain.Models.DatabaseModels.EntryType", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("SubTransactionClassificationId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("SubTransactionClassificationId");
-
-                    b.ToTable("EntryTypes");
-                });
-
-            modelBuilder.Entity("ForAccountRecords.Domain.Models.DatabaseModels.SubTransactionClassification", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("TransactionClassificationId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("TransactionClassificationId");
-
-                    b.ToTable("TransactionClassifications");
-                });
-
-            modelBuilder.Entity("ForAccountRecords.Domain.Models.DatabaseModels.TransactionClassification", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("TransactionTypeId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("TransactionTypeId");
-
-                    b.ToTable("TransactionClassification");
-                });
-
-            modelBuilder.Entity("ForAccountRecords.Domain.Models.DatabaseModels.TransactionType", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("TransactionType");
-                });
 
             modelBuilder.Entity("ForAccountRecords.Domain.Models.DatabaseModels.User", b =>
                 {
@@ -285,50 +166,6 @@ namespace ForAccountRecords.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("ContactsCategories");
-                });
-
-            modelBuilder.Entity("ForAccountRecords.Domain.Models.DatabaseModels.Entry", b =>
-                {
-                    b.HasOne("ForAccountRecords.Domain.Models.DatabaseModels.EntryType", "EntryType")
-                        .WithMany()
-                        .HasForeignKey("EntryTypeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("EntryType");
-                });
-
-            modelBuilder.Entity("ForAccountRecords.Domain.Models.DatabaseModels.EntryType", b =>
-                {
-                    b.HasOne("ForAccountRecords.Domain.Models.DatabaseModels.SubTransactionClassification", "SubTransactionClassification")
-                        .WithMany()
-                        .HasForeignKey("SubTransactionClassificationId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("SubTransactionClassification");
-                });
-
-            modelBuilder.Entity("ForAccountRecords.Domain.Models.DatabaseModels.SubTransactionClassification", b =>
-                {
-                    b.HasOne("ForAccountRecords.Domain.Models.DatabaseModels.TransactionClassification", "TransactionClassification")
-                        .WithMany()
-                        .HasForeignKey("TransactionClassificationId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("TransactionClassification");
-                });
-
-            modelBuilder.Entity("ForAccountRecords.Domain.Models.DatabaseModels.TransactionClassification", b =>
-                {
-                    b.HasOne("ForAccountRecords.Domain.Models.DatabaseModels.TransactionType", "TransactionType")
-                        .WithMany()
-                        .HasForeignKey("TransactionTypeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("TransactionType");
                 });
 
             modelBuilder.Entity("ForAccountRecords.Domain.Models.DatabaseModels.UserContact", b =>
