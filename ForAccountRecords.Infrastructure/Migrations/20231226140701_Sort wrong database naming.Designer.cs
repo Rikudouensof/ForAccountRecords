@@ -4,6 +4,7 @@ using ForAccountRecords.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ForAccountRecords.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231226140701_Sort wrong database naming")]
+    partial class Sortwrongdatabasenaming
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -51,17 +54,12 @@ namespace ForAccountRecords.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("SubTransactionClassificationId")
-                        .HasColumnType("int");
-
                     b.Property<decimal>("Units")
                         .HasColumnType("decimal(18,2)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("EntryTypeId");
-
-                    b.HasIndex("SubTransactionClassificationId");
 
                     b.ToTable("Entries");
                 });
@@ -78,7 +76,12 @@ namespace ForAccountRecords.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("SubTransactionClassificationId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("SubTransactionClassificationId");
 
                     b.ToTable("EntryTypes");
                 });
@@ -141,7 +144,7 @@ namespace ForAccountRecords.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("TransactionTypes");
+                    b.ToTable("TransactionEntries");
                 });
 
             modelBuilder.Entity("ForAccountRecords.Domain.Models.DatabaseModels.User", b =>
@@ -295,13 +298,16 @@ namespace ForAccountRecords.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.Navigation("EntryType");
+                });
+
+            modelBuilder.Entity("ForAccountRecords.Domain.Models.DatabaseModels.EntryType", b =>
+                {
                     b.HasOne("ForAccountRecords.Domain.Models.DatabaseModels.SubTransactionClassification", "SubTransactionClassification")
                         .WithMany()
                         .HasForeignKey("SubTransactionClassificationId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("EntryType");
 
                     b.Navigation("SubTransactionClassification");
                 });

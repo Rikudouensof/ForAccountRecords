@@ -15,10 +15,5 @@ namespace ForAccountRecords.Domain.Models.DatabaseModels
     [Required]
     public string Name { get; set; }
 
-    //Relationships
-    public virtual EntryType EntryType { get; set; }
-    public int EntryTypeId { get; set; }
-
-    
   }
 }

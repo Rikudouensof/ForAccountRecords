@@ -16,7 +16,7 @@ namespace ForAccountRecords.Infrastructure.Helpers
 
 
         private readonly IJwtOptionManager _jwtOptionManager;
-
+        
         public JwtHelper(IJwtOptionManager jwtOptionManager)
         {
             _jwtOptionManager = jwtOptionManager;
@@ -25,6 +25,7 @@ namespace ForAccountRecords.Infrastructure.Helpers
         public string GenerateToken(User user)
         {
             var options = _jwtOptionManager.GenerateJwtOptions();
+            
             var claims = _jwtOptionManager.GenerateClaims(user);
             var symentricKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(options.SecretKey));
             var algorithem = SecurityAlgorithms.HmacSha256;
