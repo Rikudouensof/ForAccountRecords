@@ -1,16 +1,17 @@
-﻿using System;
+﻿using ForAccountRecords.Domain.Models.DatabaseModels;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ForAccountRecords.Domain.Models.DatabaseModels
+namespace ForAccountRecords.Domain.ViewModels.EntriesViewModel
 {
-    public class Entry
+    public class MakeEntryViewModel
     {
-        [Key]
-        public int Id { get; set; }
+
+        public int? Id { get; set; }
 
         [Required]
         public DateTime Date { get; set; }
@@ -32,16 +33,10 @@ namespace ForAccountRecords.Domain.Models.DatabaseModels
         public string RefrenceNumber { get; set; }
 
 
-
-
-
         //Relationships
-        public virtual EntryType EntryType { get; set; }
+  
         public int EntryTypeId { get; set; }
-
-        public virtual SubTransactionClassification SubTransactionClassification { get; set; }
+       
         public int SubTransactionClassificationId { get; set; }
-
-
     }
 }

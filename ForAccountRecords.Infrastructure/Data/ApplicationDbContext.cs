@@ -20,9 +20,9 @@ namespace ForAccountRecords.Infrastructure.Data
 
         public DbSet<Entry> Entries { get; set; }
         public DbSet<EntryType> EntryTypes { get; set; }
-        public DbSet<SubTransactionClassification> TransactionClassifications { get; set; }
-        public DbSet<TransactionType> TransactionTypes { get; set; }
+        public DbSet<SubTransactionClassification> SubTransactionClassifications { get; set; }
+        public DbSet<TransactionClassification> TransactionClassifications { get; set; }
 
-        public DbSet<TransactionType> TransactionEntries { get; set; }
+        public DbSet<TransactionType> TransactionTypes { get; set; }
     }
 }

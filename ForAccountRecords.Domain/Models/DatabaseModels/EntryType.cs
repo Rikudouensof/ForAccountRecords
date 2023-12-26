@@ -15,8 +15,6 @@ namespace ForAccountRecords.Domain.Models.DatabaseModels
         [Required]
         public string Name { get; set; }
 
-        //Relationships
-        public virtual SubTransactionClassification SubTransactionClassification { get; set; }
-        public int SubTransactionClassificationId { get; set; }
+        
     }
 }

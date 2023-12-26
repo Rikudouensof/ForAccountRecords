@@ -24,4 +24,8 @@
     <ProjectReference Include="..\ForAccountRecords.Application\ForAccountRecords.Application.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Data\Scripts\" />
+  </ItemGroup>
+
 </Project>
