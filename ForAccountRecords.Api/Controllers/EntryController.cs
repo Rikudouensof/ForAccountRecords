@@ -15,17 +15,17 @@ namespace ForAccountRecords.Api.Controllers
     [ApiController]
     public class EntryController : ControllerBase
     {
-        private readonly IUserManagementService _userMgmt;
+        
         private readonly IAppSettingGenerator _appSetting;
         private readonly ILogHelper _logger;
         readonly string classname = nameof(EntryController);
 
-        public EntryController(IUserManagementService userManagementService,
+        public EntryController(
           IAppSettingGenerator appSettingGenerator,
           ILogHelper logger
           )
         {
-            _userMgmt = userManagementService;
+
             _appSetting = appSettingGenerator;
             _logger = logger;
         }
@@ -33,10 +33,10 @@ namespace ForAccountRecords.Api.Controllers
 
 
 
-        [HttpPost("GetTransactionTypes")]
-        public IActionResult GetAllTransactionTypes(RegisterViewModel input)
+        [HttpPost("GetAll")]
+        public IActionResult GetAllEntries(string userId)
         {
-            var methodname = $"{classname}/{nameof(RegisterNewUser)}";
+            var methodname = $"{classname}/{nameof(GetAllEntries)}";
             var appSettings = _appSetting.Generate();
             var requestId = GeneralHelpers.GetNewRequestId();
             var Ip = Request.HttpContext.Connection.RemoteIpAddress.ToString();
@@ -45,15 +45,9 @@ namespace ForAccountRecords.Api.Controllers
             {
                 return BadRequest();
             }
-            var registerUserPayload = new RegisterRequestDto()
-            {
-                InputData = input,
-                AppSettings = appSettings,
-                RequestId = requestId,
-                Ip = Ip
-            };
-            var response = _userMgmt.RegisterUser(registerUserPayload);
-            if (response.ResponseCode == GeneralResponse.sucessCode)
+            
+            var response = "";
+            if (response == GeneralResponse.sucessCode)
             {
                 return Ok(response);
             }

@@ -24,5 +24,7 @@ namespace ForAccountRecords.Infrastructure.Data
         public DbSet<TransactionClassification> TransactionClassifications { get; set; }
 
         public DbSet<TransactionType> TransactionTypes { get; set; }
+
+        public DbSet<UserRole> UserRoles { get; set; }
     }
 }

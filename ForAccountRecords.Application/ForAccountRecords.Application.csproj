@@ -14,4 +14,8 @@
     <ProjectReference Include="..\ForAccountRecords.Domain\ForAccountRecords.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Services\DbServices\" />
+  </ItemGroup>
+
 </Project>

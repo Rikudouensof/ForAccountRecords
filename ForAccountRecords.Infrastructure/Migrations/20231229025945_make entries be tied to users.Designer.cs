@@ -4,6 +4,7 @@ using ForAccountRecords.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ForAccountRecords.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231229025945_make entries be tied to users")]
+    partial class makeentriesbetiedtousers
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -207,12 +210,7 @@ namespace ForAccountRecords.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("UserRolesIdId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("UserRolesIdId");
 
                     b.ToTable("Users");
                 });
@@ -297,23 +295,6 @@ namespace ForAccountRecords.Infrastructure.Migrations
                     b.ToTable("ContactsCategories");
                 });
 
-            modelBuilder.Entity("ForAccountRecords.Domain.Models.DatabaseModels.UserRole", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("UserRoles");
-                });
-
             modelBuilder.Entity("ForAccountRecords.Domain.Models.DatabaseModels.Entry", b =>
                 {
                     b.HasOne("ForAccountRecords.Domain.Models.DatabaseModels.EntryType", "EntryType")
@@ -361,17 +342,6 @@ namespace ForAccountRecords.Infrastructure.Migrations
                         .IsRequired();
 
                     b.Navigation("TransactionType");
-                });
-
-            modelBuilder.Entity("ForAccountRecords.Domain.Models.DatabaseModels.User", b =>
-                {
-                    b.HasOne("ForAccountRecords.Domain.Models.DatabaseModels.UserRole", "UserRolesId")
-                        .WithMany()
-                        .HasForeignKey("UserRolesIdId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("UserRolesId");
                 });
 
             modelBuilder.Entity("ForAccountRecords.Domain.Models.DatabaseModels.UserContact", b =>

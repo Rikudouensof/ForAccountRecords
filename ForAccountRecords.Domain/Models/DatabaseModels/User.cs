@@ -48,5 +48,7 @@ namespace ForAccountRecords.Domain.Models.DatabaseModels
 
     [Required]
     public bool IsDeleted { get; set; }
-  }
+
+        public UserRole UserRolesId { get; set; }
+    }
 }
