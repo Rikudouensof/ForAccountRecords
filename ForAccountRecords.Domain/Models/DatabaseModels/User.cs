@@ -21,7 +21,7 @@ namespace ForAccountRecords.Domain.Models.DatabaseModels
     [Required]
     public string LastName { get; set; }
 
-    [Required]
+    [Required] 
     public string UserName { get; set; }
 
     [EmailAddress]
