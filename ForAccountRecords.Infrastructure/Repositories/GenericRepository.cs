@@ -1,6 +1,8 @@
-﻿using ForAccountRecords.Application.Helpers;
+﻿using Azure;
+using ForAccountRecords.Application.Helpers;
 using ForAccountRecords.Application.IRepository;
 using ForAccountRecords.Domain.Models.DatabaseModels;
+using ForAccountRecords.Domain.Models.GeneralModels;
 using ForAccountRecords.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
@@ -23,18 +25,20 @@ namespace ForAccountRecords.Infrastructure.Repositories
         {
             _dbContext = dbContext;
             _logger = logger;
-            _dbSet = _dbContext.Set<T>();
+            this._dbSet = dbContext.Set<T>();
         }
 
-        public async Task<IEnumerable<T>> All()
+        public async Task<IEnumerable<T>> All( BaseRequestModel userData)
         {
-
-
+            var methodName = $"GenericRepository/{nameof(All)}";
             try
             {
 
 
-                return await _dbSet.ToListAsync();
+                var response = await  _dbSet.ToListAsync();
+                _logger.LogInformation(userData.RequestId, "Db Process successful", userData.Ip, methodName);
+                return response;
+            
             }
             catch (Exception ex)
             {
@@ -43,63 +47,72 @@ namespace ForAccountRecords.Infrastructure.Repositories
             }
         }
 
-        public async Task<T> GetById(K id)
+        public async Task<T> GetById(K id, BaseRequestModel userData)
         {
-
+            var methodName = $"GenericRepository/{nameof(GetById)}";
             try
             {
 
 
-                return await _dbSet.FindAsync(id);
+                var response = await _dbSet.FindAsync(id);
+                _logger.LogInformation(userData.RequestId, "Db Process successful", userData.Ip, methodName);
+                return response;
             }
             catch (Exception ex)
             {
-                _logger.LogError("0", "Db Process failed", "::1", "All", ex);
+                _logger.LogError(userData.RequestId, "Db Process failed", userData.Ip, methodName, ex);
                 return null;
             }
         }
 
-        public async Task<bool> Add(T entity)
+        public async Task<bool> Add(T entity, BaseRequestModel userData)
         {
+
+            var methodName = $"GenericRepository/{nameof(Add)}";
             try
             {
 
                 await _dbSet.AddAsync(entity);
+                _logger.LogInformation(userData.RequestId, "Db Process successful", userData.Ip, methodName);
                 return true;
             }
             catch (Exception ex)
             {
-                _logger.LogError("0", "Db Process failed", "::1", "All", ex);
+                _logger.LogError(userData.RequestId, "Db Process failed", userData.Ip, methodName, ex);
                 return false;
             }
         }
 
-        public async  Task<bool> Delete(K id)
+        public async  Task<bool> Delete(K id, BaseRequestModel userData)
         {
+            var methodName = $"GenericRepository/{nameof(Delete)}";
             try
             {
                 var entity =  _dbSet.Find(id);
                 _dbSet.Remove(entity);
+                _logger.LogInformation(userData.RequestId, "Db Process successful", userData.Ip, methodName);
                 return true;
             }
             catch (Exception ex)
             {
-                _logger.LogError("0", "Db Process failed", "::1", "All", ex);
+                _logger.LogError(userData.RequestId, "Db Process failed", userData.Ip, methodName, ex);
                 return false;
             }
         }
 
-        public async Task<bool> Update(T entity)
+        public async Task<bool> Update(T entity, BaseRequestModel userData)
         {
+
+            var methodName = $"GenericRepository/{nameof(Update)}";
             try
             {
-
-                 _dbSet.Update(entity);
+                 _dbSet.Remove(entity);
+                _logger.LogInformation(userData.RequestId, "Db Process successful", userData.Ip, methodName);
                 return true;
             }
             catch (Exception ex)
             {
-                _logger.LogError("0", "Db Process failed", "::1", "All", ex);
+                _logger.LogError(userData.RequestId, "Db Process failed", userData.Ip, methodName, ex);
                 return false;
             }
         }

@@ -11,7 +11,7 @@ namespace ForAccountRecords.Domain.Models.DatabaseModels
     {
 
         [Key]
-        public int Id { get; set; }
+        public long Id { get; set; }
 
         [Required]
         public string FullName { get; set; }
@@ -40,7 +40,7 @@ namespace ForAccountRecords.Domain.Models.DatabaseModels
 
         //Relationships
         public virtual User User { get; set; }
-        public int UserId { get; set; }
+        public long UserId { get; set; }
 
         public virtual UserContactsCategory UserContactsCategory { get; set; }
         public int UserContactsCategoryId { get; set; }

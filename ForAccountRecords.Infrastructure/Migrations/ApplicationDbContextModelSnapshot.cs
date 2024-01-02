@@ -24,11 +24,11 @@ namespace ForAccountRecords.Infrastructure.Migrations
 
             modelBuilder.Entity("ForAccountRecords.Domain.Models.DatabaseModels.Entry", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<decimal>("Amount")
                         .HasColumnType("decimal(18,2)");
@@ -57,8 +57,8 @@ namespace ForAccountRecords.Infrastructure.Migrations
                     b.Property<decimal>("Units")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
+                    b.Property<long>("UserId")
+                        .HasColumnType("bigint");
 
                     b.HasKey("Id");
 
@@ -151,11 +151,11 @@ namespace ForAccountRecords.Infrastructure.Migrations
 
             modelBuilder.Entity("ForAccountRecords.Domain.Models.DatabaseModels.User", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<string>("ConfirmationCode")
                         .IsRequired()
@@ -219,11 +219,11 @@ namespace ForAccountRecords.Infrastructure.Migrations
 
             modelBuilder.Entity("ForAccountRecords.Domain.Models.DatabaseModels.UserContact", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<string>("Address")
                         .IsRequired()
@@ -252,8 +252,8 @@ namespace ForAccountRecords.Infrastructure.Migrations
                     b.Property<int>("UserContactsCategoryId")
                         .HasColumnType("int");
 
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
+                    b.Property<long>("UserId")
+                        .HasColumnType("bigint");
 
                     b.Property<string>("Website")
                         .IsRequired()

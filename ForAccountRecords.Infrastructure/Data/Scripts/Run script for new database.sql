@@ -1,4 +1,4 @@
-use ForAccountRecords
+use ForAccountRecordsV2
 
 Insert into TransactionTypes values('Assets')
 Insert into TransactionTypes values('Liabilities')

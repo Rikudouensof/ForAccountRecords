@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace ForAccountRecords.Infrastructure.Repositories
 {
-    public class UserRepository : GenericRepository<User, int>, IUserRepository
+    public class UserRepository : GenericRepository<User, long>, IUserRepository
     {
 
         public UserRepository(ApplicationDbContext dbContext, ILogHelper logger) : base(dbContext, logger)

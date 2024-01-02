@@ -1,5 +1,6 @@
 using ForAccountRecords.Api.ApplicationTasks;
 using ForAccountRecords.Application.Helpers;
+using ForAccountRecords.Application.IConfiguration;
 using ForAccountRecords.Application.Services;
 using ForAccountRecords.Infrastructure.Data;
 using ForAccountRecords.Infrastructure.Helpers;
@@ -62,13 +63,14 @@ namespace ForAccountRecords.Api
             });
 
             //Impelement Dependency Injections
+            
             builder.Services.AddScoped<IEmailService, SMTPEmailService>();
             builder.Services.AddScoped<IUserManagementService, UserManagementService>();
             builder.Services.AddScoped<IAppSettingGenerator, AppSettingGenerator>();
             builder.Services.AddScoped<IInnerEncryption, InnerEncryption>();
             builder.Services.AddTransient<IJwtOptionManager, JwtOptionManager>();
             builder.Services.AddTransient<IJwtHelper, JwtHelper>();
-
+            builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
             //Jwt
             builder.Services.AddAuthentication(authSetting =>

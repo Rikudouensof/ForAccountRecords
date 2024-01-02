@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ForAccountRecords.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20231226140701_Sort wrong database naming")]
-    partial class Sortwrongdatabasenaming
+    [Migration("20240102015340_Initalise new database")]
+    partial class Initalisenewdatabase
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -27,11 +27,11 @@ namespace ForAccountRecords.Infrastructure.Migrations
 
             modelBuilder.Entity("ForAccountRecords.Domain.Models.DatabaseModels.Entry", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<decimal>("Amount")
                         .HasColumnType("decimal(18,2)");
@@ -54,12 +54,22 @@ namespace ForAccountRecords.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("SubTransactionClassificationId")
+                        .HasColumnType("int");
+
                     b.Property<decimal>("Units")
                         .HasColumnType("decimal(18,2)");
+
+                    b.Property<long>("UserId")
+                        .HasColumnType("bigint");
 
                     b.HasKey("Id");
 
                     b.HasIndex("EntryTypeId");
+
+                    b.HasIndex("SubTransactionClassificationId");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Entries");
                 });
@@ -76,12 +86,7 @@ namespace ForAccountRecords.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("SubTransactionClassificationId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("SubTransactionClassificationId");
 
                     b.ToTable("EntryTypes");
                 });
@@ -144,16 +149,16 @@ namespace ForAccountRecords.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("TransactionEntries");
+                    b.ToTable("TransactionTypes");
                 });
 
             modelBuilder.Entity("ForAccountRecords.Domain.Models.DatabaseModels.User", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<string>("ConfirmationCode")
                         .IsRequired()
@@ -205,18 +210,23 @@ namespace ForAccountRecords.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("UserRolesIdId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("UserRolesIdId");
 
                     b.ToTable("Users");
                 });
 
             modelBuilder.Entity("ForAccountRecords.Domain.Models.DatabaseModels.UserContact", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<string>("Address")
                         .IsRequired()
@@ -245,8 +255,8 @@ namespace ForAccountRecords.Infrastructure.Migrations
                     b.Property<int>("UserContactsCategoryId")
                         .HasColumnType("int");
 
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
+                    b.Property<long>("UserId")
+                        .HasColumnType("bigint");
 
                     b.Property<string>("Website")
                         .IsRequired()
@@ -290,6 +300,23 @@ namespace ForAccountRecords.Infrastructure.Migrations
                     b.ToTable("ContactsCategories");
                 });
 
+            modelBuilder.Entity("ForAccountRecords.Domain.Models.DatabaseModels.UserRole", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("UserRoles");
+                });
+
             modelBuilder.Entity("ForAccountRecords.Domain.Models.DatabaseModels.Entry", b =>
                 {
                     b.HasOne("ForAccountRecords.Domain.Models.DatabaseModels.EntryType", "EntryType")
@@ -298,18 +325,23 @@ namespace ForAccountRecords.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("EntryType");
-                });
-
-            modelBuilder.Entity("ForAccountRecords.Domain.Models.DatabaseModels.EntryType", b =>
-                {
                     b.HasOne("ForAccountRecords.Domain.Models.DatabaseModels.SubTransactionClassification", "SubTransactionClassification")
                         .WithMany()
                         .HasForeignKey("SubTransactionClassificationId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("ForAccountRecords.Domain.Models.DatabaseModels.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("EntryType");
+
                     b.Navigation("SubTransactionClassification");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("ForAccountRecords.Domain.Models.DatabaseModels.SubTransactionClassification", b =>
@@ -332,6 +364,17 @@ namespace ForAccountRecords.Infrastructure.Migrations
                         .IsRequired();
 
                     b.Navigation("TransactionType");
+                });
+
+            modelBuilder.Entity("ForAccountRecords.Domain.Models.DatabaseModels.User", b =>
+                {
+                    b.HasOne("ForAccountRecords.Domain.Models.DatabaseModels.UserRole", "UserRolesId")
+                        .WithMany()
+                        .HasForeignKey("UserRolesIdId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("UserRolesId");
                 });
 
             modelBuilder.Entity("ForAccountRecords.Domain.Models.DatabaseModels.UserContact", b =>

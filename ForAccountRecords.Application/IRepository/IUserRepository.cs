@@ -7,8 +7,9 @@ using System.Threading.Tasks;
 
 namespace ForAccountRecords.Application.IRepository
 {
-    public interface IUserRepository : IGenericRepository<User, int>
+    public interface IUserRepository : IGenericRepository<User, long>
     {
+
     }
 }
  

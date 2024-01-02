@@ -44,7 +44,7 @@ namespace ForAccountRecords.Domain.Models.DatabaseModels
 
 
         public User User { get; set; }
-        public int UserId { get; set; }
+        public long UserId { get; set; }
 
 
     }
