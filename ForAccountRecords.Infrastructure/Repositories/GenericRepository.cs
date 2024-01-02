@@ -106,7 +106,7 @@ namespace ForAccountRecords.Infrastructure.Repositories
             var methodName = $"GenericRepository/{nameof(Update)}";
             try
             {
-                 _dbSet.Remove(entity);
+                 _dbSet.Update(entity);
                 _logger.LogInformation(userData.RequestId, "Db Process successful", userData.Ip, methodName);
                 return true;
             }

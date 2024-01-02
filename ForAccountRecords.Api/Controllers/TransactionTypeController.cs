@@ -1,6 +1,7 @@
 ﻿using ForAccountRecords.Api.ApplicationTasks;
 using ForAccountRecords.Application.Helpers;
 using ForAccountRecords.Application.IConfiguration;
+using ForAccountRecords.Domain.Dtos.EndPointDtos.TransactionTypeEndpointDtos;
 using ForAccountRecords.Domain.Models.DatabaseModels;
 using ForAccountRecords.Domain.Models.GeneralModels;
 using ForAccountRecords.Infrastructure.Helpers;
@@ -54,13 +55,13 @@ namespace ForAccountRecords.Api.Controllers
                     RequestId = requestId
                 };
                 var response = await _unitOfWork.TransactionTypes.All(baseRequestData);
-                
+                _logger.LogInformation(requestId, "Process Sucessful", Ip, methodname);
                 return Ok(response);
             }
             catch (Exception ex)
             {
-
-                return BadRequest(ex.Message);
+                _logger.LogError(requestId, "Process Failed", Ip, methodname, ex);
+                return BadRequest("Failed");
             }
 
 
@@ -70,7 +71,7 @@ namespace ForAccountRecords.Api.Controllers
 
 
         [HttpPost("GetSingle")]
-        public async Task<IActionResult> GetSingle([FromBody] int Id)
+        public async Task<IActionResult> GetSingle([FromBody] TTESingle input)
         {
             var methodname = $"{classname}/{nameof(GetSingle)}";
             var requestId = GeneralHelpers.GetNewRequestId();
@@ -88,21 +89,21 @@ namespace ForAccountRecords.Api.Controllers
                     Ip = Ip,
                     RequestId = requestId
                 };
-                var response = await _unitOfWork.TransactionTypes.GetById(Id, baseRequestData);
-                
+                var response = await _unitOfWork.TransactionTypes.GetById(input.Id, baseRequestData);
 
+                _logger.LogInformation(requestId, "Process Sucessful", Ip, methodname);
                 return Ok(response);
             }
             catch (Exception ex)
             {
-
-                return BadRequest(ex.Message);
+                _logger.LogError(requestId, "Process Failed", Ip, methodname, ex);
+                return BadRequest("Failed");
             }
         }
 
 
         [HttpPost("Add")]
-        public async Task<IActionResult> Add([FromBody] TransactionType input)
+        public async Task<IActionResult> Add([FromBody] TTEData input)
         {
             var methodname = $"{classname}/{nameof(Add)}";
             var requestId = GeneralHelpers.GetNewRequestId();
@@ -120,25 +121,33 @@ namespace ForAccountRecords.Api.Controllers
                     Ip = Ip,
                     RequestId = requestId
                 };
-                var response = await _unitOfWork.TransactionTypes.Add(input, baseRequestData);
+                var payload = new TransactionType()
+                {
+                    Id = input.Id,
+                    Name = input.Name
+
+                };
+                var response = await _unitOfWork.TransactionTypes.Add(payload, baseRequestData);
                 await _unitOfWork.CompleteAsync();
                 if (response)
                 {
+                    _logger.LogInformation(requestId, "Process Sucessful", Ip, methodname);
                     return Ok("Successful");
                 }
+                _logger.LogInformation(requestId, "Process Not Truly Sucessful", Ip, methodname);
                 return Ok("Failed");
 
             }
             catch (Exception ex)
             {
-
-                return BadRequest(ex.Message);
+                _logger.LogError(requestId, "Process Failed", Ip, methodname, ex);
+                return BadRequest("Failed");
             }
         }
 
 
         [HttpPost("Edit")]
-        public async Task<IActionResult> Edit([FromBody] TransactionType input)
+        public async Task<IActionResult> Edit([FromBody] TTEData input)
         {
             var methodname = $"{classname}/{nameof(Edit)}";
             var requestId = GeneralHelpers.GetNewRequestId();
@@ -156,25 +165,34 @@ namespace ForAccountRecords.Api.Controllers
                     Ip = Ip,
                     RequestId = requestId
                 };
-                var response = await _unitOfWork.TransactionTypes.Update(input, baseRequestData);
-                 await _unitOfWork.CompleteAsync();
+                var payload = new TransactionType()
+                {
+                    Id = input.Id,
+                    Name = input.Name
 
+                };
+                var response = await _unitOfWork.TransactionTypes.Update(payload, baseRequestData);
+                await _unitOfWork.CompleteAsync();
+
+                
                 if (response)
                 {
+                    _logger.LogInformation(requestId, "Process Sucessful", Ip, methodname);
                     return Ok("Successful");
                 }
+                _logger.LogInformation(requestId, "Process Not Truly Sucessful", Ip, methodname);
                 return Ok("Failed");
             }
             catch (Exception ex)
             {
-
-                return BadRequest(ex.Message);
+                _logger.LogError(requestId, "Process Failed", Ip, methodname, ex);
+                return BadRequest("Failed");
             }
         }
 
 
         [HttpPost("Delete")]
-        public async Task<IActionResult> Delete([FromBody] TransactionType input)
+        public async Task<IActionResult> Delete([FromBody] TTESingle input)
         {
             var methodname = $"{classname}/{nameof(Delete)}";
             var requestId = GeneralHelpers.GetNewRequestId();
@@ -192,19 +210,22 @@ namespace ForAccountRecords.Api.Controllers
                     Ip = Ip,
                     RequestId = requestId
                 };
-                var response = await _unitOfWork.TransactionTypes.Update(input, baseRequestData);
+
+                var response = await _unitOfWork.TransactionTypes.Delete(input.Id, baseRequestData);
                 await _unitOfWork.CompleteAsync();
 
                 if (response)
                 {
+                    _logger.LogInformation(requestId, "Process Sucessful", Ip, methodname);
                     return Ok("Successful");
                 }
+                _logger.LogInformation(requestId, "Process Not Truly Sucessful", Ip, methodname);
                 return Ok("Failed");
             }
             catch (Exception ex)
             {
-
-                return BadRequest(ex.Message);
+                _logger.LogError(requestId, "Process Failed", Ip, methodname, ex);
+                return BadRequest("Failed");
             }
         }
 
