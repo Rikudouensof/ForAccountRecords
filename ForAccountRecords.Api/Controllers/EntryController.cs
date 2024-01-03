@@ -1,6 +1,7 @@
 ﻿using ForAccountRecords.Api.ApplicationTasks;
 using ForAccountRecords.Application.Helpers;
 using ForAccountRecords.Application.IConfiguration;
+using ForAccountRecords.Domain.Dtos.EndPointDtos.EntryEndpointDtos;
 using ForAccountRecords.Domain.Dtos.EndPointDtos.TransactionTypeEndpointDtos;
 using ForAccountRecords.Domain.Models.DatabaseModels;
 using ForAccountRecords.Domain.Models.GeneralModels;
@@ -12,15 +13,15 @@ namespace ForAccountRecords.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class TransactionTypeController : ControllerBase
+    public class EntryController : ControllerBase
     {
 
         private IUnitOfWork _unitOfWork;
         private readonly IAppSettingGenerator _appSetting;
         private readonly ILogHelper _logger;
-        readonly string classname = nameof(TransactionTypeController);
+        readonly string classname = nameof(EntryController);
 
-        public TransactionTypeController(
+        public EntryController(
           IAppSettingGenerator appSettingGenerator,
           ILogHelper logger,
           IUnitOfWork unitOfWork
@@ -54,7 +55,7 @@ namespace ForAccountRecords.Api.Controllers
                     Ip = Ip,
                     RequestId = requestId
                 };
-                var response = await _unitOfWork.TransactionTypes.All(baseRequestData);
+                var response = await _unitOfWork.Entries.All(baseRequestData);
                 _logger.LogInformation(requestId, "Process Sucessful", Ip, methodname);
                 return Ok(response);
             }
@@ -71,7 +72,7 @@ namespace ForAccountRecords.Api.Controllers
 
 
         [HttpPost("GetSingle")]
-        public async Task<IActionResult> GetSingle([FromBody] TransactionTypeEndpointSingleDto input)
+        public async Task<IActionResult> GetSingle([FromBody] EntryEndpointSingleDto input)
         {
             var methodname = $"{classname}/{nameof(GetSingle)}";
             var requestId = GeneralHelpers.GetNewRequestId();
@@ -89,7 +90,7 @@ namespace ForAccountRecords.Api.Controllers
                     Ip = Ip,
                     RequestId = requestId
                 };
-                var response = await _unitOfWork.TransactionTypes.GetById(input.Id, baseRequestData);
+                var response = await _unitOfWork.Entries.GetById(input.Id, baseRequestData);
 
                 _logger.LogInformation(requestId, "Process Sucessful", Ip, methodname);
                 return Ok(response);
@@ -103,7 +104,7 @@ namespace ForAccountRecords.Api.Controllers
 
 
         [HttpPost("Add")]
-        public async Task<IActionResult> Add([FromBody] TransactionTypeEendpointDataDto input)
+        public async Task<IActionResult> Add([FromBody] EntryEndpointDataDto input)
         {
             var methodname = $"{classname}/{nameof(Add)}";
             var requestId = GeneralHelpers.GetNewRequestId();
@@ -121,13 +122,20 @@ namespace ForAccountRecords.Api.Controllers
                     Ip = Ip,
                     RequestId = requestId
                 };
-                var payload = new TransactionType()
+                var payload = new Entry()
                 {
                     Id = input.Id,
-                    Name = input.Name
-
+                    Name = input.Name,
+                    Amount = input.Amount,
+                    Description = input.Description,
+                    Date = input.Date,
+                    EntryTypeId = input.EntryTypeId,
+                    RefrenceNumber = input.RefrenceNumber,
+                    SubTransactionClassificationId = input.SubTransactionClassificationId,
+                    UserId = input.UserId,
+                    Units = input.Units
                 };
-                var response = await _unitOfWork.TransactionTypes.Add(payload, baseRequestData);
+                var response = await _unitOfWork.Entries.Add(payload, baseRequestData);
                 await _unitOfWork.CompleteAsync();
                 if (response)
                 {
@@ -147,7 +155,7 @@ namespace ForAccountRecords.Api.Controllers
 
 
         [HttpPost("Edit")]
-        public async Task<IActionResult> Edit([FromBody] TransactionTypeEendpointDataDto input)
+        public async Task<IActionResult> Edit([FromBody] EntryEndpointDataDto input)
         {
             var methodname = $"{classname}/{nameof(Edit)}";
             var requestId = GeneralHelpers.GetNewRequestId();
@@ -165,16 +173,23 @@ namespace ForAccountRecords.Api.Controllers
                     Ip = Ip,
                     RequestId = requestId
                 };
-                var payload = new TransactionType()
+                var payload = new Entry()
                 {
                     Id = input.Id,
-                    Name = input.Name
-
+                    Name = input.Name,
+                    Amount = input.Amount,
+                    Description = input.Description,
+                    Date = input.Date,
+                    EntryTypeId = input.EntryTypeId,
+                    RefrenceNumber = input.RefrenceNumber,
+                    SubTransactionClassificationId = input.SubTransactionClassificationId,
+                    UserId = input.UserId,
+                    Units = input.Units
                 };
-                var response = await _unitOfWork.TransactionTypes.Update(payload, baseRequestData);
+                var response = await _unitOfWork.Entries.Update(payload, baseRequestData);
                 await _unitOfWork.CompleteAsync();
 
-                
+
                 if (response)
                 {
                     _logger.LogInformation(requestId, "Process Sucessful", Ip, methodname);
@@ -192,7 +207,7 @@ namespace ForAccountRecords.Api.Controllers
 
 
         [HttpPost("Delete")]
-        public async Task<IActionResult> Delete([FromBody] TransactionTypeEndpointSingleDto input)
+        public async Task<IActionResult> Delete([FromBody] EntryEndpointSingleDto input)
         {
             var methodname = $"{classname}/{nameof(Delete)}";
             var requestId = GeneralHelpers.GetNewRequestId();
@@ -211,7 +226,7 @@ namespace ForAccountRecords.Api.Controllers
                     RequestId = requestId
                 };
 
-                var response = await _unitOfWork.TransactionTypes.Delete(input.Id, baseRequestData);
+                var response = await _unitOfWork.Entries.Delete(input.Id, baseRequestData);
                 await _unitOfWork.CompleteAsync();
 
                 if (response)
@@ -228,6 +243,5 @@ namespace ForAccountRecords.Api.Controllers
                 return BadRequest("Failed");
             }
         }
-
     }
 }

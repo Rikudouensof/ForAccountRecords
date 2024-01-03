@@ -1,26 +1,25 @@
 ﻿using ForAccountRecords.Api.ApplicationTasks;
 using ForAccountRecords.Application.Helpers;
 using ForAccountRecords.Application.IConfiguration;
-using ForAccountRecords.Domain.Dtos.EndPointDtos.TransactionTypeEndpointDtos;
+using ForAccountRecords.Domain.Dtos.EndPointDtos.TransactionClassificationEndpointDtos;
 using ForAccountRecords.Domain.Models.DatabaseModels;
 using ForAccountRecords.Domain.Models.GeneralModels;
 using ForAccountRecords.Infrastructure.Helpers;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ForAccountRecords.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class TransactionTypeController : ControllerBase
+    public class TransactionClassificationController : ControllerBase
     {
 
         private IUnitOfWork _unitOfWork;
         private readonly IAppSettingGenerator _appSetting;
         private readonly ILogHelper _logger;
-        readonly string classname = nameof(TransactionTypeController);
+        readonly string classname = nameof(TransactionClassificationController);
 
-        public TransactionTypeController(
+        public TransactionClassificationController(
           IAppSettingGenerator appSettingGenerator,
           ILogHelper logger,
           IUnitOfWork unitOfWork
@@ -48,13 +47,12 @@ namespace ForAccountRecords.Api.Controllers
             }
             try
             {
-
                 var baseRequestData = new BaseRequestModel()
                 {
                     Ip = Ip,
                     RequestId = requestId
                 };
-                var response = await _unitOfWork.TransactionTypes.All(baseRequestData);
+                var response = await _unitOfWork.TransactionClassifications.All(baseRequestData);
                 _logger.LogInformation(requestId, "Process Sucessful", Ip, methodname);
                 return Ok(response);
             }
@@ -63,15 +61,13 @@ namespace ForAccountRecords.Api.Controllers
                 _logger.LogError(requestId, "Process Failed", Ip, methodname, ex);
                 return BadRequest("Failed");
             }
-
-
         }
 
 
 
 
         [HttpPost("GetSingle")]
-        public async Task<IActionResult> GetSingle([FromBody] TransactionTypeEndpointSingleDto input)
+        public async Task<IActionResult> GetSingle([FromBody] TransactionClassificationEndpointSingleDto input)
         {
             var methodname = $"{classname}/{nameof(GetSingle)}";
             var requestId = GeneralHelpers.GetNewRequestId();
@@ -89,7 +85,7 @@ namespace ForAccountRecords.Api.Controllers
                     Ip = Ip,
                     RequestId = requestId
                 };
-                var response = await _unitOfWork.TransactionTypes.GetById(input.Id, baseRequestData);
+                var response = await _unitOfWork.TransactionClassifications.GetById(input.Id, baseRequestData);
 
                 _logger.LogInformation(requestId, "Process Sucessful", Ip, methodname);
                 return Ok(response);
@@ -103,7 +99,7 @@ namespace ForAccountRecords.Api.Controllers
 
 
         [HttpPost("Add")]
-        public async Task<IActionResult> Add([FromBody] TransactionTypeEendpointDataDto input)
+        public async Task<IActionResult> Add([FromBody] TransactionClassificationEndpointDataDto input)
         {
             var methodname = $"{classname}/{nameof(Add)}";
             var requestId = GeneralHelpers.GetNewRequestId();
@@ -121,13 +117,14 @@ namespace ForAccountRecords.Api.Controllers
                     Ip = Ip,
                     RequestId = requestId
                 };
-                var payload = new TransactionType()
+                var payload = new TransactionClassification()
                 {
                     Id = input.Id,
-                    Name = input.Name
+                    Name = input.Name,
+                    TransactionTypeId = input.TransactionTypeId
 
                 };
-                var response = await _unitOfWork.TransactionTypes.Add(payload, baseRequestData);
+                var response = await _unitOfWork.TransactionClassifications.Add(payload, baseRequestData);
                 await _unitOfWork.CompleteAsync();
                 if (response)
                 {
@@ -147,7 +144,7 @@ namespace ForAccountRecords.Api.Controllers
 
 
         [HttpPost("Edit")]
-        public async Task<IActionResult> Edit([FromBody] TransactionTypeEendpointDataDto input)
+        public async Task<IActionResult> Edit([FromBody] TransactionClassificationEndpointDataDto input)
         {
             var methodname = $"{classname}/{nameof(Edit)}";
             var requestId = GeneralHelpers.GetNewRequestId();
@@ -165,16 +162,17 @@ namespace ForAccountRecords.Api.Controllers
                     Ip = Ip,
                     RequestId = requestId
                 };
-                var payload = new TransactionType()
+                var payload = new TransactionClassification()
                 {
                     Id = input.Id,
-                    Name = input.Name
+                    Name = input.Name,
+                    TransactionTypeId = input.TransactionTypeId
 
                 };
-                var response = await _unitOfWork.TransactionTypes.Update(payload, baseRequestData);
+                var response = await _unitOfWork.TransactionClassifications.Update(payload, baseRequestData);
                 await _unitOfWork.CompleteAsync();
 
-                
+
                 if (response)
                 {
                     _logger.LogInformation(requestId, "Process Sucessful", Ip, methodname);
@@ -192,7 +190,7 @@ namespace ForAccountRecords.Api.Controllers
 
 
         [HttpPost("Delete")]
-        public async Task<IActionResult> Delete([FromBody] TransactionTypeEndpointSingleDto input)
+        public async Task<IActionResult> Delete([FromBody] TransactionClassificationEndpointSingleDto input)
         {
             var methodname = $"{classname}/{nameof(Delete)}";
             var requestId = GeneralHelpers.GetNewRequestId();
@@ -211,7 +209,7 @@ namespace ForAccountRecords.Api.Controllers
                     RequestId = requestId
                 };
 
-                var response = await _unitOfWork.TransactionTypes.Delete(input.Id, baseRequestData);
+                var response = await _unitOfWork.TransactionClassifications.Delete(input.Id, baseRequestData);
                 await _unitOfWork.CompleteAsync();
 
                 if (response)
@@ -228,6 +226,5 @@ namespace ForAccountRecords.Api.Controllers
                 return BadRequest("Failed");
             }
         }
-
     }
 }

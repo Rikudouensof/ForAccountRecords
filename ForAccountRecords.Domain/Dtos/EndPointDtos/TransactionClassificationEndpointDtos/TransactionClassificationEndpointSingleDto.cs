@@ -5,9 +5,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ForAccountRecords.Domain.Dtos.EndPointDtos.TransactionTypeEndpointDtos
+namespace ForAccountRecords.Domain.Dtos.EndPointDtos.TransactionClassificationEndpointDtos
 {
-    public class TTESingle : ItemByInt
+    public class TransactionClassificationEndpointSingleDto : ItemByInt
     {
+        
     }
 }

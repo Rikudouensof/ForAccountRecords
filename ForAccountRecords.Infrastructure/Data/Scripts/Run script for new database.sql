@@ -98,3 +98,8 @@ Insert into SubTransactionClassifications values('Dividend',9)
 --Entry Types
 Insert into EntryTypes values('Credit')
 Insert into EntryTypes values('Debit')
+
+
+--User Roles
+Insert into UserRoles values('Admin')
+Insert into UserRoles values('User')

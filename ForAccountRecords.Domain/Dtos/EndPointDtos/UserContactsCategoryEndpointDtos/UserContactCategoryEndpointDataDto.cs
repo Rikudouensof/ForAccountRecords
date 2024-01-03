@@ -5,12 +5,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ForAccountRecords.Domain.Dtos.EndPointDtos.TransactionTypeEndpointDtos
+namespace ForAccountRecords.Domain.Dtos.EndPointDtos.UserContactsCategoryEndpointDtos
 {
-    public class TTEData
+    public class UserContactCategoryEndpointDataDto
     {
+      
         public int Id { get; set; }
-
 
         [Required]
         public string Name { get; set; }
