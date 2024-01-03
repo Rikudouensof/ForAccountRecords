@@ -103,3 +103,15 @@ Insert into EntryTypes values('Debit')
 --User Roles
 Insert into UserRoles values('Admin')
 Insert into UserRoles values('User')
+
+--ContactCategories
+  Insert into ContactsCategories values('Personal')
+  Insert into ContactsCategories values('Retail')
+  Insert into ContactsCategories values('Costumer')
+  Insert into ContactsCategories values('Agnency')
+  Insert into ContactsCategories values('Government Agnency')
+  Insert into ContactsCategories values('Wholesale')
+  Insert into ContactsCategories values('Companies')
+  Insert into ContactsCategories values('Staff')
+  Insert into ContactsCategories values('Contractors')
+  Insert into ContactsCategories values('Service Providers')
