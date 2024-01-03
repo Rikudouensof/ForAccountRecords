@@ -5,12 +5,14 @@ using ForAccountRecords.Domain.Dtos.EndPointDtos.TransactionClassificationEndpoi
 using ForAccountRecords.Domain.Models.DatabaseModels;
 using ForAccountRecords.Domain.Models.GeneralModels;
 using ForAccountRecords.Infrastructure.Helpers;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ForAccountRecords.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class TransactionClassificationController : ControllerBase
     {
 
