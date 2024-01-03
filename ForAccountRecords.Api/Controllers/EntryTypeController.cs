@@ -14,7 +14,8 @@ namespace ForAccountRecords.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
+    [Authorize(Roles = "Admin")]
+
     public class EntryTypeController : ControllerBase
     {
         private IUnitOfWork _unitOfWork;
