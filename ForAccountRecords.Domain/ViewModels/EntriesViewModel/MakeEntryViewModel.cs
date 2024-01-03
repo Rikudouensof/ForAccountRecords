@@ -11,7 +11,7 @@ namespace ForAccountRecords.Domain.ViewModels.EntriesViewModel
     public class MakeEntryViewModel
     {
 
-        public int? Id { get; set; }
+        public long? Id { get; set; }
 
         [Required]
         public DateTime Date { get; set; }
@@ -38,5 +38,7 @@ namespace ForAccountRecords.Domain.ViewModels.EntriesViewModel
         public int EntryTypeId { get; set; }
        
         public int SubTransactionClassificationId { get; set; }
+
+        
     }
 }

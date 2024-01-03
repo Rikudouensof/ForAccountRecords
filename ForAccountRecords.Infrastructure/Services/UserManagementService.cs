@@ -464,7 +464,7 @@ namespace ForAccountRecords.Infrastructure.Services
                 var userUsername = _db.Users.Where(m => m.EmailAddress.Equals(payload.EmailAddress)).FirstOrDefault();
                 if (userEmail is not null)
                 {
-                    _logger.logWarning(input.RequestId, "Process Faild: Password and RePassword does not match", input.Ip, methodname);
+                    _logger.logWarning(input.RequestId, "Process Faild: Email already exist", input.Ip, methodname);
                     response.ResponseCode = GeneralResponse.failureCode;
                     response.ResponseMessage = GeneralResponse.failureMessage;
                     response.Response = "Could not register user at this time: Email already exist";
@@ -473,7 +473,7 @@ namespace ForAccountRecords.Infrastructure.Services
 
                 if (userUsername is not null)
                 {
-                    _logger.logWarning(input.RequestId, "Process Faild: Password and RePassword does not match", input.Ip, methodname);
+                    _logger.logWarning(input.RequestId, "Process Faild: Username already exist", input.Ip, methodname);
                     response.ResponseCode = GeneralResponse.failureCode;
                     response.ResponseMessage = GeneralResponse.failureMessage;
                     response.Response = "Could not register user at this time: Username already exist";
@@ -510,7 +510,6 @@ namespace ForAccountRecords.Infrastructure.Services
                     EmailAddress = payload.EmailAddress,
                     ConfirmationCodeDate = DateTime.Now,
                     Password = encryptedPassword,
-                    IsDeleted = false,
                     FirstName = payload.FirstName,
                     MiddleName = payload.MiddleName,
                     LastName = payload.LastName,
@@ -520,7 +519,8 @@ namespace ForAccountRecords.Infrastructure.Services
                     IsEmailConfirmed = false,
                     JoinedOn = joinDate,
                     LastOnline = joinDate,
-                    ConfirmationCode = emailConfirmationCode
+                    ConfirmationCode = emailConfirmationCode,
+                    UserRolesId = 2
                 };
                 _db.Users.Add(user);
                 _db.SaveChanges();

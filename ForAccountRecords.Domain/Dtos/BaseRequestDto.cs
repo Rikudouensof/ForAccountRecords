@@ -8,19 +8,13 @@ using System.Threading.Tasks;
 
 namespace ForAccountRecords.Domain.Dtos
 {
-  public class BaseRequestDto<T> where T : class
-  {
+  public class BaseRequestDto<T> : BaseRequestModel where T : class 
+    {
 
     [Required]
     public AppSettings AppSettings { get; set; }
 
-    [Required]
-    public string RequestId { get; set; }
-
-
-    [Required]
-    public string Ip { get; set; }
-
+   
     [Required]
     public T InputData { get; set; }
 

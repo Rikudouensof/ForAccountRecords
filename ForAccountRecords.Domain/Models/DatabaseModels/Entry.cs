@@ -10,7 +10,7 @@ namespace ForAccountRecords.Domain.Models.DatabaseModels
     public class Entry
     {
         [Key]
-        public int Id { get; set; }
+        public long Id { get; set; }
 
         [Required]
         public DateTime Date { get; set; }
@@ -41,6 +41,10 @@ namespace ForAccountRecords.Domain.Models.DatabaseModels
 
         public virtual SubTransactionClassification SubTransactionClassification { get; set; }
         public int SubTransactionClassificationId { get; set; }
+
+
+        public User User { get; set; }
+        public long UserId { get; set; }
 
 
     }
