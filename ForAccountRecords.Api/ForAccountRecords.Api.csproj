@@ -28,4 +28,10 @@
     <ProjectReference Include="..\ForAccountRecords.Infrastructure\ForAccountRecords.Infrastructure.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="Files\EmailTemplate.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>

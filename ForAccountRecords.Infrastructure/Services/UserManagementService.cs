@@ -500,7 +500,7 @@ namespace ForAccountRecords.Infrastructure.Services
                     {
                         Subject = "Email Confirmation",
                         RecipeientEmailAddress = payload.EmailAddress,
-                        Body = $"Hello {payload.Username}, Your Email Confirmation Code is {myRandomNo}. Please note that this code expires by {DateTime.Now.AddMinutes(-10).ToShortTimeString}",
+                        Body = $"Hello {payload.Username}, Your Email Confirmation Code is {myRandomNo}. Please note that this code expires by {joinDate.AddHours(1)}",
                     }
                 };
                 _emailService.SendMailAsync(emailPayload);
@@ -613,13 +613,6 @@ namespace ForAccountRecords.Infrastructure.Services
             }
             return response;
         }
-
-
-
-
-
-
-
 
         //Non direct API methods
         private User GetUserDataByUserId(int userId, string requestId, string Ip)

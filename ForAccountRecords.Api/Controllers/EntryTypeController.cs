@@ -39,9 +39,9 @@ namespace ForAccountRecords.Api.Controllers
 
 
         [HttpGet("GetAll")]
-        public async Task<IActionResult> GetAllEntry()
+        public async Task<IActionResult> GetAll()
         {
-            var methodname = $"{classname}/{nameof(GetAllEntry)}";
+            var methodname = $"{classname}/{nameof(GetAll)}";
             var requestId = GeneralHelpers.GetNewRequestId();
             var Ip = Request.HttpContext.Connection.RemoteIpAddress.ToString();
             _logger.LogInformation(requestId, "New Process", Ip, methodname);
