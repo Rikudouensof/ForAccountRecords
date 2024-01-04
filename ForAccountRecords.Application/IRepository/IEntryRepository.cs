@@ -13,7 +13,7 @@ namespace ForAccountRecords.Application.IRepository
         public IEnumerable<Entry> AllByUserId(long Id, BaseRequestModel userData);
 
 
-        public IEnumerable<bool> IsUserEntry(long itemId,long userId , BaseRequestModel userData);
+        public bool IsUserEntry(long itemId,long userId , BaseRequestModel userData);
 
     }
 }

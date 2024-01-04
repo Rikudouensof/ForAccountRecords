@@ -13,7 +13,7 @@ namespace ForAccountRecords.Application.IRepository
 
         public IEnumerable<UserContact> AllByUserId(long Id, BaseRequestModel userData);
 
-        public IEnumerable<bool> IsUserContact(long itemId, long userId, BaseRequestModel userData);
+        public bool IsUserContact(long itemId, long userId, BaseRequestModel userData);
     }
 }
  

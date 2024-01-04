@@ -30,6 +30,29 @@ namespace ForAccountRecords.Infrastructure.Repositories
                 return new List<Entry>();
             }
         }
+
+        public bool IsUserEntry(long itemId, long userId, BaseRequestModel userData)
+        {
+            var methodName = $"EntryRepository/{nameof(IsUserEntry)}";
+            try
+            {
+                var response = _dbSet.Where(x => x.Id == itemId).First();
+                _logger.LogInformation(userData.RequestId, "Db Process successful", userData.Ip, methodName);
+                if (response.UserId == userId)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(userData.RequestId, "Db Process failed", userData.Ip, methodName, ex);
+                return false;
+            }
+        }
     }
 }
  

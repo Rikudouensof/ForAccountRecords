@@ -7,7 +7,6 @@ using ForAccountRecords.Domain.Models.DatabaseModels;
 using ForAccountRecords.Domain.Models.GeneralModels;
 using ForAccountRecords.Infrastructure.Helpers;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ForAccountRecords.Api.Controllers
@@ -50,13 +49,13 @@ namespace ForAccountRecords.Api.Controllers
             }
             try
             {
-
                 var baseRequestData = new BaseRequestModel()
                 {
                     Ip = Ip,
                     RequestId = requestId
                 };
-                var response = await _unitOfWork.Entries.All(baseRequestData);
+                
+                var response = await _unitOfWork.Entries.AllByUserId(,baseRequestData);
                 _logger.LogInformation(requestId, "Process Sucessful", Ip, methodname);
                 return Ok(response);
             }
@@ -91,6 +90,15 @@ namespace ForAccountRecords.Api.Controllers
                     Ip = Ip,
                     RequestId = requestId
                 };
+
+
+                var userId = long.Parse(User.FindFirst("Sid").Value);
+                var isUserHaveAccess =  _unitOfWork.Entries.IsUserEntry(input.Id,userId, baseRequestData);
+                if (!isUserHaveAccess)
+                {
+                    return BadRequest("You do not have access to this resource");
+                }
+
                 var response = await _unitOfWork.Entries.GetById(input.Id, baseRequestData);
 
                 _logger.LogInformation(requestId, "Process Sucessful", Ip, methodname);
@@ -174,6 +182,12 @@ namespace ForAccountRecords.Api.Controllers
                     Ip = Ip,
                     RequestId = requestId
                 };
+                var userId = long.Parse(User.FindFirst("Sid").Value);
+                var isUserHaveAccess = _unitOfWork.Entries.IsUserEntry(input.Id, userId, baseRequestData);
+                if (!isUserHaveAccess)
+                {
+                    return BadRequest("You do not have access to this resource");
+                }
                 var payload = new Entry()
                 {
                     Id = input.Id,
@@ -226,7 +240,12 @@ namespace ForAccountRecords.Api.Controllers
                     Ip = Ip,
                     RequestId = requestId
                 };
-
+                var userId = long.Parse(User.FindFirst("Sid").Value);
+                var isUserHaveAccess = _unitOfWork.Entries.IsUserEntry(input.Id, userId, baseRequestData);
+                if (!isUserHaveAccess)
+                {
+                    return BadRequest("You do not have access to this resource");
+                }
                 var response = await _unitOfWork.Entries.Delete(input.Id, baseRequestData);
                 await _unitOfWork.CompleteAsync();
 
@@ -372,8 +391,6 @@ namespace ForAccountRecords.Api.Controllers
         }
 
 
-
-
         [HttpGet("GetAllUserContact")]
         public async Task<IActionResult> GetAllUserContact()
         {
@@ -387,13 +404,13 @@ namespace ForAccountRecords.Api.Controllers
             }
             try
             {
-
                 var baseRequestData = new BaseRequestModel()
                 {
                     Ip = Ip,
                     RequestId = requestId
                 };
-                var response = await _unitOfWork.UserContacts.All(baseRequestData);
+                var userId = long.Parse(User.FindFirst("Sid").Value);
+                var response =  _unitOfWork.UserContacts.AllByUserId(userId, baseRequestData);
                 _logger.LogInformation(requestId, "Process Sucessful", Ip, methodname);
                 return Ok(response);
             }
@@ -426,6 +443,12 @@ namespace ForAccountRecords.Api.Controllers
                     Ip = Ip,
                     RequestId = requestId
                 };
+                var userId = long.Parse(User.FindFirst("Sid").Value);
+                var isUserHaveAccess = _unitOfWork.UserContacts.IsUserContact(input.Id, userId, baseRequestData);
+                if (!isUserHaveAccess)
+                {
+                    return BadRequest("You do not have access to this resource");
+                }
                 var response = await _unitOfWork.UserContacts.GetById(input.Id, baseRequestData);
 
                 _logger.LogInformation(requestId, "Process Sucessful", Ip, methodname);
@@ -475,6 +498,7 @@ namespace ForAccountRecords.Api.Controllers
                     Website = input.Website
 
                 };
+                
                 var response = await _unitOfWork.UserContacts.Add(payload, baseRequestData);
                 await _unitOfWork.CompleteAsync();
                 if (response)
@@ -530,6 +554,12 @@ namespace ForAccountRecords.Api.Controllers
                     Website = input.Website
 
                 };
+                var userId = long.Parse(User.FindFirst("Sid").Value);
+                var isUserHaveAccess = _unitOfWork.UserContacts.IsUserContact(input.Id, userId, baseRequestData);
+                if (!isUserHaveAccess)
+                {
+                    return BadRequest("You do not have access to this resource");
+                }
                 var response = await _unitOfWork.UserContacts.Update(payload, baseRequestData);
                 await _unitOfWork.CompleteAsync();
 
@@ -569,7 +599,12 @@ namespace ForAccountRecords.Api.Controllers
                     Ip = Ip,
                     RequestId = requestId
                 };
-
+                var userId = long.Parse(User.FindFirst("Sid").Value);
+                var isUserHaveAccess = _unitOfWork.UserContacts.IsUserContact(input.Id, userId, baseRequestData);
+                if (!isUserHaveAccess)
+                {
+                    return BadRequest("You do not have access to this resource");
+                }
                 var response = await _unitOfWork.UserContacts.Delete(input.Id, baseRequestData);
                 await _unitOfWork.CompleteAsync();
 
@@ -603,7 +638,6 @@ namespace ForAccountRecords.Api.Controllers
             }
             try
             {
-
                 var baseRequestData = new BaseRequestModel()
                 {
                     Ip = Ip,
