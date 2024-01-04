@@ -54,8 +54,8 @@ namespace ForAccountRecords.Api.Controllers
                     Ip = Ip,
                     RequestId = requestId
                 };
-                
-                var response = await _unitOfWork.Entries.AllByUserId(,baseRequestData);
+                var userId = long.Parse(User.FindFirst("Sid").Value);
+                var response =  _unitOfWork.Entries.AllByUserId(userId, baseRequestData);
                 _logger.LogInformation(requestId, "Process Sucessful", Ip, methodname);
                 return Ok(response);
             }
