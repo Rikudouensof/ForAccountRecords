@@ -1,7 +1,10 @@
 ﻿using ForAccountRecords.Application.Helpers;
 using ForAccountRecords.Application.Services;
 using ForAccountRecords.Domain.Dtos.ServiceDtos.EmailDtos.Request;
-using System.Net.Mail;
+using MailKit.Net.Smtp;
+using MailKit.Security;
+using MimeKit;
+
 using System.Net.Mime;
 
 
@@ -14,35 +17,41 @@ namespace ForAccountRecords.Infrastructure.Services
         {
             _logger = logger;
         }
-        public async Task SendMailAsync(EmailRequestDto message)
+        public async Task SendMailAsync(EmailRequestDto input)
         {
             var methodName = $" {nameof(SMTPEmailService)}/{nameof(SendMailAsync)}";
             try
             {
 
 
-                MailMessage msg = new MailMessage();
-                msg.From = new MailAddress(message.AppSettings.SmtpEmailAddress);
-                msg.To.Add(new MailAddress(message.EmailData.RecipeientEmailAddress));
-                msg.Subject = message.EmailData.Subject;
-                msg.AlternateViews.Add(AlternateView.CreateAlternateViewFromString(message.EmailData.Body, null, MediaTypeNames.Text.Html));
-                msg.IsBodyHtml = true;
-                SmtpClient smtpClient = new SmtpClient("foraccountrecords.com", Convert.ToInt32(465));
-                smtpClient.UseDefaultCredentials = false;
-                System.Net.NetworkCredential credentials = new System.Net.NetworkCredential(message.AppSettings.SmtpEmailAddress, message.AppSettings.SmtpPassword);
 
-                smtpClient.Credentials = credentials;
-                smtpClient.EnableSsl = true;
-                smtpClient.SendAsync(msg,"");
-                _logger.LogInformation(message.RequestId, $"Mail to {message.EmailData.RecipeientEmailAddress} was sent successfully", message.Ip, methodName);
+                var message = new MimeMessage();
+                message.From.Add(new MailboxAddress("For Account Records",input.AppSettings.SmtpEmailAddress));
+                message.To.Add(new MailboxAddress("Recipient",input.EmailData.RecipeientEmailAddress));
+                message.Subject = input.EmailData.Subject;
+                message.Body = new TextPart("plain") { Text = input.EmailData.Body };
+
+                using (var client = new SmtpClient())
+                {
+                    client.Connect("foraccountrecords.com", 465, SecureSocketOptions.Auto);
+                    client.Authenticate(input.AppSettings.SmtpEmailAddress, input.AppSettings.SmtpPassword);
+
+                    client.Send(message);
+                    client.Disconnect(true);
+                }
+                _logger.LogInformation(input.RequestId, $"Mail to {input.EmailData.RecipeientEmailAddress} was sent successfully", input.Ip, methodName);
             }
             catch (Exception ex)
             {
 
-                _logger.LogError(message.RequestId, $"Mail to {message.EmailData.RecipeientEmailAddress} was not sent successfully", message.Ip, methodName, ex);
+                _logger.LogError(input.RequestId, $"Mail to {input.EmailData.RecipeientEmailAddress} was not sent successfully", input.Ip, methodName, ex);
             }
 
 
         }
+
+
+
+
     }
 }
