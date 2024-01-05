@@ -8,6 +8,7 @@ using ForAccountRecords.Infrastructure.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
 using NLog.Extensions.Logging;
 using System.Text;
 
@@ -27,6 +28,17 @@ namespace ForAccountRecords.Api
                 IncludeScopes = true,
                 ShutdownOnDispose = true
             };
+
+            var securityScheme = new OpenApiSecurityScheme
+            {
+                Description = "JWT Authorization header using the Bearer scheme. Example: \"Authorization: Bearer {token}\"",
+                Name = "Authorization",
+                In = ParameterLocation.Header,
+                Type = SecuritySchemeType.ApiKey
+            };
+
+            
+
             //Get AppSettings
             IConfiguration config = new ConfigurationBuilder()
                             .AddJsonFile("appsettings.json")
@@ -39,7 +51,36 @@ namespace ForAccountRecords.Api
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
-            builder.Services.AddSwaggerGen();
+            builder.Services.AddSwaggerGen(c =>
+            {
+                c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+                {
+                    Description = "JWT Authorization header using the Bearer scheme.",
+                    Name = "Authorization",
+                    In = ParameterLocation.Header,
+                    Type = SecuritySchemeType.Http,
+                    Scheme = "Bearer",
+                    BearerFormat = "JWT"
+                });
+
+                c.AddSecurityRequirement(new OpenApiSecurityRequirement
+    {
+        {
+            new OpenApiSecurityScheme
+            {
+                Reference = new OpenApiReference
+                {
+                    Type = ReferenceType.SecurityScheme,
+                    Id = "Bearer"
+                },
+                Scheme = "oauth2",
+                Name = "Bearer",
+                In = ParameterLocation.Header,
+            },
+            new List<string>()
+        }
+    });
+            });
 
 
             //Add Database
@@ -63,7 +104,7 @@ namespace ForAccountRecords.Api
             });
 
             //Impelement Dependency Injections
-            
+
             builder.Services.AddScoped<IEmailService, SMTPEmailService>();
             builder.Services.AddScoped<IUserManagementService, UserManagementService>();
             builder.Services.AddScoped<IAppSettingGenerator, AppSettingGenerator>();
@@ -71,6 +112,10 @@ namespace ForAccountRecords.Api
             builder.Services.AddTransient<IJwtOptionManager, JwtOptionManager>();
             builder.Services.AddTransient<IJwtHelper, JwtHelper>();
             builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+            builder.Services.AddScoped<IFinancialStatementService, FinancialStatementService>();
+
+
+
 
             //Jwt
             builder.Services.AddAuthentication(authSetting =>
@@ -100,9 +145,9 @@ namespace ForAccountRecords.Api
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
-                app.UseSwagger();
-                app.UseSwaggerUI();
-            
+            app.UseSwagger();
+            app.UseSwaggerUI();
+
 
             app.UseHttpsRedirection();
             app.UseAuthentication();
