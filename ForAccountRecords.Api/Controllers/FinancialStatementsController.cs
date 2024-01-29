@@ -1,13 +1,10 @@
 ﻿using ForAccountRecords.Api.ApplicationTasks;
 using ForAccountRecords.Application.Helpers;
-using ForAccountRecords.Application.IConfiguration;
 using ForAccountRecords.Application.Services;
-using ForAccountRecords.Domain.Dtos.ServiceDtos.FinancialStatementsDtos.Request;
-using ForAccountRecords.Domain.Models.GeneralModels;
+using ForAccountRecords.Domain.Dtos.InnerDtos.ServiceDtos.FinancialStatementsDtos.Request;
+using ForAccountRecords.Domain.Helpers;
 using ForAccountRecords.Domain.ViewModels.InternalViewModels.FinaincialStatementViewModels;
-using ForAccountRecords.Infrastructure.Helpers;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ForAccountRecords.Api.Controllers

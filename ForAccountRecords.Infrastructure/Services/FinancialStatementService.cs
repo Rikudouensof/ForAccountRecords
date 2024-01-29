@@ -6,7 +6,7 @@ using ForAccountRecords.Domain.Dtos.InnerDtos.ServiceDtos.FinancialStatementsDto
 using ForAccountRecords.Domain.Dtos.InnerDtos.ServiceDtos.FinancialStatementsDtos.Response;
 using ForAccountRecords.Domain.Models.DatabaseModels;
 using ForAccountRecords.Domain.Models.GeneralModels;
-using ForAccountRecords.Domain.ViewModels.EntriesViewModel;
+using ForAccountRecords.Domain.ViewModels.InternalViewModels.EntriesViewModel;
 using ForAccountRecords.Domain.ViewModels.InternalViewModels.FinaincialStatementViewModels;
 using ForAccountRecords.Infrastructure.Data;
 using ForAccountRecords.Infrastructure.Helpers;

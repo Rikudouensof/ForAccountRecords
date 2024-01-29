@@ -1,13 +1,11 @@
 ﻿using ForAccountRecords.Api.ApplicationTasks;
 using ForAccountRecords.Application.Helpers;
 using ForAccountRecords.Application.IConfiguration;
-using ForAccountRecords.Domain.Dtos.EndPointDtos.TransactionTypeEndpointDtos;
 using ForAccountRecords.Domain.Dtos.InnerDtos.EndPointDtos.EntryTypeEndpointDtos;
+using ForAccountRecords.Domain.Helpers;
 using ForAccountRecords.Domain.Models.DatabaseModels;
 using ForAccountRecords.Domain.Models.GeneralModels;
-using ForAccountRecords.Infrastructure.Helpers;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ForAccountRecords.Api.Controllers
