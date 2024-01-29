@@ -1,12 +1,14 @@
 ﻿using ForAccountRecords.Application.Helpers;
 using ForAccountRecords.Application.Services;
+using ForAccountRecords.Application.Services.ApiServices.EndpointCreationService;
 using ForAccountRecords.Domain.Constants;
-using ForAccountRecords.Domain.Dtos.ServiceDtos.EmailDtos.Request;
-using ForAccountRecords.Domain.Dtos.ServiceDtos.UserManagementDtos.Request;
-using ForAccountRecords.Domain.Dtos.ServiceDtos.UserManagementDtos.Response;
+using ForAccountRecords.Domain.Dtos.InnerDtos.ServiceDtos.EmailDtos.Request;
+using ForAccountRecords.Domain.Dtos.InnerDtos.ServiceDtos.UserManagementDtos.Request;
+using ForAccountRecords.Domain.Dtos.InnerDtos.ServiceDtos.UserManagementDtos.Response;
+using ForAccountRecords.Domain.Helpers;
 using ForAccountRecords.Domain.Models.DatabaseModels;
 using ForAccountRecords.Domain.Models.GeneralModels;
-using ForAccountRecords.Domain.ViewModels.UserManagementViewModels;
+using ForAccountRecords.Domain.ViewModels.InternalViewModels.UserManagementViewModels;
 using ForAccountRecords.Infrastructure.Data;
 using ForAccountRecords.Infrastructure.Helpers;
 using System;
@@ -17,10 +19,10 @@ using System.Threading.Tasks;
 
 namespace ForAccountRecords.Infrastructure.Services
 {
-    public class UserManagementService : IUserManagementService
+    public class UserManagementService : IUserManagementCreationService
     {
         private readonly ILogHelper _logger;
-        readonly string classname = nameof(SendGridEmailService);
+        readonly string classname = nameof(UserManagementService);
         private readonly ApplicationDbContext _db;
         private readonly IInnerEncryption _encypt;
         private readonly IEmailService _emailService;
@@ -186,7 +188,7 @@ namespace ForAccountRecords.Infrastructure.Services
                     Ip = input.Ip,
                     RequestId = input.RequestId,
                     SourceName = input.AppSettings.SendGridSourceName,
-                    EmailData = new Domain.ViewModels.EmailViewmodel()
+                    EmailData = new Domain.ViewModels.InternalViewModels.EmailViewmodel()
                     {
                         Subject = "Confirm Account Delete",
                         RecipeientEmailAddress = user.EmailAddress,
@@ -252,7 +254,7 @@ namespace ForAccountRecords.Infrastructure.Services
                     Ip = input.Ip,
                     RequestId = input.RequestId,
                     SourceName = input.AppSettings.SendGridSourceName,
-                    EmailData = new Domain.ViewModels.EmailViewmodel()
+                    EmailData = new Domain.ViewModels.InternalViewModels.EmailViewmodel()
                     {
                         Subject = "Confirm Account Delete",
                         RecipeientEmailAddress = user.EmailAddress,
@@ -346,7 +348,7 @@ namespace ForAccountRecords.Infrastructure.Services
                 {
                     ResponseCode = GeneralResponse.sucessCode,
                     ResponseMessage = GeneralResponse.sucessMessage,
-                    Response = new Domain.ViewModels.UserManagementViewModels.UserDetailsViewModel()
+                    Response = new Domain.ViewModels.InternalViewModels.UserManagementViewModels.UserDetailsViewModel()
                     {
                         UserEmail = user.EmailAddress,
                         UserId = user.Id.ToString(),
@@ -496,7 +498,7 @@ namespace ForAccountRecords.Infrastructure.Services
                     Ip = input.Ip,
                     RequestId = input.RequestId,
                     SourceName = input.AppSettings.SendGridSourceName,
-                    EmailData = new Domain.ViewModels.EmailViewmodel()
+                    EmailData = new Domain.ViewModels.InternalViewModels.EmailViewmodel()
                     {
                         Subject = "Email Confirmation",
                         RecipeientEmailAddress = payload.EmailAddress,

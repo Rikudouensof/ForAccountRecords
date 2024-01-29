@@ -1,6 +1,6 @@
 ﻿using ForAccountRecords.Application.Helpers;
-using ForAccountRecords.Domain.Dtos.ServiceDtos.FinancialStatementsDtos.Request;
-using ForAccountRecords.Domain.Dtos.ServiceDtos.FinancialStatementsDtos.Response;
+using ForAccountRecords.Domain.Dtos.InnerDtos.ServiceDtos.FinancialStatementsDtos.Request;
+using ForAccountRecords.Domain.Dtos.InnerDtos.ServiceDtos.FinancialStatementsDtos.Response;
 using System;
 using System.Collections.Generic;
 using System.Linq;

@@ -1,16 +1,12 @@
-﻿using Azure.Core;
-using ForAccountRecords.Api.ApplicationTasks;
+﻿using ForAccountRecords.Api.ApplicationTasks;
 using ForAccountRecords.Application.Helpers;
-using ForAccountRecords.Application.Services;
+using ForAccountRecords.Application.Services.ApiServices.EndpointCreationService;
 using ForAccountRecords.Domain.Constants;
-using ForAccountRecords.Domain.Dtos.ServiceDtos.UserManagementDtos.Request;
-using ForAccountRecords.Domain.Dtos.ServiceDtos.UserManagementDtos.Response;
-using ForAccountRecords.Domain.ViewModels.UserManagementViewModels;
-using ForAccountRecords.Infrastructure.Helpers;
-using ForAccountRecords.Infrastructure.Services;
+using ForAccountRecords.Domain.Dtos.InnerDtos.ServiceDtos.UserManagementDtos.Request;
+using ForAccountRecords.Domain.Helpers;
+using ForAccountRecords.Domain.ViewModels.InternalViewModels.UserManagementViewModels;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc; 
+using Microsoft.AspNetCore.Mvc;
 
 namespace ForAccountRecords.Api.Controllers
 {
@@ -18,12 +14,12 @@ namespace ForAccountRecords.Api.Controllers
     [ApiController]
     public class UserManagementController : ControllerBase
     {
-        private readonly IUserManagementService _userMgmt;
+        private readonly IUserManagementCreationService _userMgmt;
         private readonly IAppSettingGenerator _appSetting;
         private readonly ILogHelper _logger;
         readonly string classname = nameof(UserManagementController);
 
-        public UserManagementController(IUserManagementService userManagementService,
+        public UserManagementController(IUserManagementCreationService userManagementService,
           IAppSettingGenerator appSettingGenerator,
           ILogHelper logger
           )

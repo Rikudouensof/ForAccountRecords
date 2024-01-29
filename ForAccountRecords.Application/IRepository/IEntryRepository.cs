@@ -1,6 +1,6 @@
 ﻿using ForAccountRecords.Domain.Models.DatabaseModels;
 using ForAccountRecords.Domain.Models.GeneralModels;
-using ForAccountRecords.Domain.ViewModels.EntriesViewModel;
+using ForAccountRecords.Domain.ViewModels.InternalViewModels.EntriesViewModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;

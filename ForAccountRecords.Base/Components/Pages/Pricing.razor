@@ -1,0 +1,146 @@
+﻿@page "/pricing"
+@rendermode InteractiveServer
+<PageTitle>Pricing</PageTitle>
+
+
+<!--pricing section-->
+<section class="py-7 bg-dark section-angle top-right bottom-right" id="pricing">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 mx-auto text-center">
+                <h2 class="text-white heading-black">Choose your pricing plan.</h2>
+                <p class="text-light lead">
+                    For Account Records is free to use, However some features are paid for
+                </p>
+            </div>
+        </div>
+        <!--pricing tables-->
+        <div class="row pt-5 pricing-table">
+            <div class="col-12 mx-auto">
+                <div class="card-deck pricing-table">
+                    <div class="card">
+                        <div class="card-body">
+                            <h3 class="card-title pt-3">Free</h3>
+                            <h2 class="card-title text-primary mb-0 pt-4">$0</h2>
+                            <div class="text-muted font-weight-medium mt-2">per month</div>
+                            <ul class="list-unstyled pricing-list">
+                                <li>1 user</li>
+                                <li>No Ads</li>
+                                <li>Cross-platform availability</li>
+                                <li>Basic support</li>
+                            </ul>
+                            <a href="#" class="btn btn-primary">
+                                Start free
+                            </a>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-body">
+                            <h3 class="card-title pt-3">Basic</h3>
+                            <h2 class="card-title text-info mb-0 pt-4">$8</h2>
+                            <div class="text-muted font-weight-medium mt-2">per month</div>
+                            <ul class="list-unstyled pricing-list">
+                                <li>Eveything in Free Teir</li>
+                                <li>Print Non-Customised documents</li>
+                                <li>Get Email of Non-Customised documents</li>
+                                <li>Priority support</li>
+                            </ul>
+                            <a href="#" class="btn btn-info">
+                                Pay Now
+                            </a>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-body">
+                            <h3 class="card-title pt-3">Professional</h3>
+                            <h2 class="card-title text-primary mb-0 pt-4">$49</h2>
+                            <div class="text-muted font-weight-medium mt-2">per month</div>
+                            <ul class="list-unstyled pricing-list">
+                                <li>Everything in the Basic Teir</li>
+                                <li>Import and Export Records</li>
+                                <li>Custumised documents</li>
+                                <li>24/7 support</li>
+                            </ul>
+
+                            <a href="#" class="btn btn-primary" disabled>Coming soon</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row mt-6">
+            <div class="col-md-12 mr-auto">
+                <h3>No Ads</h3>
+                <p class="lead">
+                    This solution is designed in a way that, if users really want to be anonymous, we will not be
+                    able to verify their identiy. Following this idea, our solution in the portal, Windows, Android,
+                    iOS and Mac do not have adverts. This is to avoid ad trackers.
+                </p>
+            </div>
+
+        </div>
+        <div class="row mt-5">
+            <div class="col-md-8 col-12 divider top-divider mx-auto pt-5 text-center">
+                <h3>Donations</h3>
+                <p class="mb-4">
+                    Since we do not use adverts, we need alternatives to keep running. As we try to
+                    protect you, we expect similar. Please donate.
+                </p>
+                <button class="btn btn-primary" @onclick="ToggleCryptoDonationDiv">
+                    Donate Crypto
+                </button>
+                <button class="btn btn-primary" @onclick="ToggleDonationDiv">
+                    Donate
+                </button>
+               
+               
+            </div>
+        </div>
+
+        @if (CryptoDonateIsVisible)
+        {
+            <div class="col-12" style="margin-top:30px;">
+
+                <div>
+                    <h3>Please scan the code to donate in any crypto currency</h3>
+                    <img src="/assets/img/BinanceDonationPayQR.png" />
+                </div>
+            </div>
+        }
+
+        @if (DonateIsVisible)
+        {
+            <div class="col-12" style="margin-top:30px;">
+
+                <div>
+                    <h3>Please click  <a href="https://www.paypal.com/donate/?hosted_button_id=9V4J4VBE4FU4Y" target="_blank">here</a> to donate, or scan the code bellow to donate.</h3>
+                    <img src="/assets/img/PaypalQRCode.png" />
+                </div>
+            </div>
+        }
+
+    </div>
+</section>
+
+@code {
+    [Parameter]
+    public bool CryptoDonateIsVisible { get; set; } = false;
+
+    [Parameter]
+    public bool DonateIsVisible { get; set; } = false;
+
+
+
+    private void ToggleCryptoDonationDiv()
+    {
+        CryptoDonateIsVisible = !CryptoDonateIsVisible;
+
+        DonateIsVisible = false;
+    }
+
+    private void ToggleDonationDiv()
+    {
+        DonateIsVisible = !DonateIsVisible;
+        CryptoDonateIsVisible = false;
+    }
+}

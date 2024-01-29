@@ -1,6 +1,6 @@
 ﻿using ForAccountRecords.Application.Helpers;
 using ForAccountRecords.Application.Services;
-using ForAccountRecords.Domain.Dtos.ServiceDtos.EmailDtos.Request;
+using ForAccountRecords.Domain.Dtos.InnerDtos.ServiceDtos.EmailDtos.Request;
 using MailKit.Net.Smtp;
 using MailKit.Security;
 using MimeKit;

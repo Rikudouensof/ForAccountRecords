@@ -2,7 +2,7 @@
 using ForAccountRecords.Application.IRepository;
 using ForAccountRecords.Domain.Models.DatabaseModels;
 using ForAccountRecords.Domain.Models.GeneralModels;
-using ForAccountRecords.Domain.ViewModels.EntriesViewModel;
+using ForAccountRecords.Domain.ViewModels.InternalViewModels.EntriesViewModel;
 using ForAccountRecords.Infrastructure.Data;
 using System.Net.Http.Headers;
 using System.Reflection;

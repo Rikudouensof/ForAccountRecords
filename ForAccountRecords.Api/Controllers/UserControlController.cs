@@ -1,8 +1,8 @@
 ﻿using ForAccountRecords.Api.ApplicationTasks;
 using ForAccountRecords.Application.Helpers;
 using ForAccountRecords.Application.IConfiguration;
-using ForAccountRecords.Domain.Dtos.EndPointDtos.EntryEndpointDtos;
-using ForAccountRecords.Domain.Dtos.EndPointDtos.UserContactEndpointDtos;
+using ForAccountRecords.Domain.Dtos.InnerDtos.EndPointDtos.EntryEndpointDtos;
+using ForAccountRecords.Domain.Dtos.InnerDtos.EndPointDtos.UserContactEndpointDtos;
 using ForAccountRecords.Domain.Models.DatabaseModels;
 using ForAccountRecords.Domain.Models.GeneralModels;
 using ForAccountRecords.Infrastructure.Helpers;

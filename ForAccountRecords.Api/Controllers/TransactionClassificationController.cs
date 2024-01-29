@@ -1,7 +1,7 @@
 ﻿using ForAccountRecords.Api.ApplicationTasks;
 using ForAccountRecords.Application.Helpers;
 using ForAccountRecords.Application.IConfiguration;
-using ForAccountRecords.Domain.Dtos.EndPointDtos.TransactionClassificationEndpointDtos;
+using ForAccountRecords.Domain.Dtos.InnerDtos.EndPointDtos.TransactionClassificationEndpointDtos;
 using ForAccountRecords.Domain.Models.DatabaseModels;
 using ForAccountRecords.Domain.Models.GeneralModels;
 using ForAccountRecords.Infrastructure.Helpers;

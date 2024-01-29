@@ -1,4 +1,4 @@
-﻿using ForAccountRecords.Domain.Dtos.ServiceDtos.EmailDtos.Request;
+﻿using ForAccountRecords.Domain.Dtos.InnerDtos.ServiceDtos.EmailDtos.Request;
 using System;
 using System.Collections.Generic;
 using System.Linq;

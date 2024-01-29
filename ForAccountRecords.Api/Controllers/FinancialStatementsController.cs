@@ -4,7 +4,7 @@ using ForAccountRecords.Application.IConfiguration;
 using ForAccountRecords.Application.Services;
 using ForAccountRecords.Domain.Dtos.ServiceDtos.FinancialStatementsDtos.Request;
 using ForAccountRecords.Domain.Models.GeneralModels;
-using ForAccountRecords.Domain.ViewModels.FinaincialStatementViewModels;
+using ForAccountRecords.Domain.ViewModels.InternalViewModels.FinaincialStatementViewModels;
 using ForAccountRecords.Infrastructure.Helpers;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;

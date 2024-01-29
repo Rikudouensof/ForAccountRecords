@@ -7,7 +7,13 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="wwwroot\HomeAssets\" />
+    <Folder Include="wwwroot\assets\vendor\choices.js\src\" />
+    <Folder Include="wwwroot\assets\vendor\choices.js\types\" />
+    <Folder Include="wwwroot\assets\vendor\imagesloaded\test\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ForAccountRecords.ApiConsuption\ForAccountRecords.ApiConsuption.csproj" />
   </ItemGroup>
 
 </Project>

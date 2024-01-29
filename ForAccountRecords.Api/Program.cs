@@ -2,6 +2,7 @@ using ForAccountRecords.Api.ApplicationTasks;
 using ForAccountRecords.Application.Helpers;
 using ForAccountRecords.Application.IConfiguration;
 using ForAccountRecords.Application.Services;
+using ForAccountRecords.Application.Services.ApiServices.EndpointCreationService;
 using ForAccountRecords.Infrastructure.Data;
 using ForAccountRecords.Infrastructure.Helpers;
 using ForAccountRecords.Infrastructure.Services;
@@ -106,7 +107,7 @@ namespace ForAccountRecords.Api
             //Impelement Dependency Injections
 
             builder.Services.AddScoped<IEmailService, SMTPEmailService>();
-            builder.Services.AddScoped<IUserManagementService, UserManagementService>();
+            builder.Services.AddScoped<IUserManagementCreationService, UserManagementService>();
             builder.Services.AddScoped<IAppSettingGenerator, AppSettingGenerator>();
             builder.Services.AddScoped<IInnerEncryption, InnerEncryption>();
             builder.Services.AddTransient<IJwtOptionManager, JwtOptionManager>();

@@ -2,7 +2,7 @@
 using ForAccountRecords.Application.Helpers;
 using ForAccountRecords.Application.IConfiguration;
 using ForAccountRecords.Domain.Dtos.EndPointDtos.EntryEndpointDtos;
-using ForAccountRecords.Domain.Dtos.EndPointDtos.UserEndpointDto;
+using ForAccountRecords.Domain.Dtos.InnerDtos.EndPointDtos.UserEndpointDto;
 using ForAccountRecords.Domain.Models.DatabaseModels;
 using ForAccountRecords.Domain.Models.GeneralModels;
 using ForAccountRecords.Infrastructure.Helpers;

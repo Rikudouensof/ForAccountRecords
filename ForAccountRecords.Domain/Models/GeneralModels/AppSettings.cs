@@ -16,5 +16,13 @@ namespace ForAccountRecords.Domain.Models.GeneralModels
         public string? SendGridSourceName { get; set; }
         public string? SmtpEmailAddress { get; set; }
         public string? SmtpPassword { get; set; }
+
+
+        //ForAccountRecordAPI
+        public string? ForAccountRecordApiBaseUrl { get; set; }
+        public string? APiJwtToken { get; set; }
+
     }
+
+
 }

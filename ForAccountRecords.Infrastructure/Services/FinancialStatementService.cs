@@ -2,12 +2,12 @@
 using ForAccountRecords.Application.IConfiguration;
 using ForAccountRecords.Application.Services;
 using ForAccountRecords.Domain.Constants;
-using ForAccountRecords.Domain.Dtos.ServiceDtos.FinancialStatementsDtos.Request;
-using ForAccountRecords.Domain.Dtos.ServiceDtos.FinancialStatementsDtos.Response;
+using ForAccountRecords.Domain.Dtos.InnerDtos.ServiceDtos.FinancialStatementsDtos.Request;
+using ForAccountRecords.Domain.Dtos.InnerDtos.ServiceDtos.FinancialStatementsDtos.Response;
 using ForAccountRecords.Domain.Models.DatabaseModels;
 using ForAccountRecords.Domain.Models.GeneralModels;
 using ForAccountRecords.Domain.ViewModels.EntriesViewModel;
-using ForAccountRecords.Domain.ViewModels.FinaincialStatementViewModels;
+using ForAccountRecords.Domain.ViewModels.InternalViewModels.FinaincialStatementViewModels;
 using ForAccountRecords.Infrastructure.Data;
 using ForAccountRecords.Infrastructure.Helpers;
 using System;
